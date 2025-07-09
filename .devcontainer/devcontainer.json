@@ -1,0 +1,52 @@
+{
+	"name": "Java",
+	"image": "mcr.microsoft.com/devcontainers/java:21",
+	"features": {
+		"ghcr.io/devcontainers/features/java:1": {
+			"version": "none",
+			"installMaven": "true",
+			"installGradle": "false"
+		},
+		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
+		"ghcr.io/devcontainers/features/node:1": {},
+		"ghcr.io/nikiforovall/devcontainer-features/dotnet-csharpier:1": {},
+		"ghcr.io/devcontainers-extra/features/angular-cli:2": {},
+		"ghcr.io/devcontainer-community/devcontainer-features/chezmoi.io:1": {}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"Codeium.codeium",
+				"cweijan.dbclient-jdbc",
+				"yzhang.markdown-all-in-one",
+				"cweijan.vscode-redis-client",
+				"Gruntfuggly.todo-tree",
+				"redhat.vscode-yaml",
+				"Catppuccin.catppuccin-vsc-pack",
+				"esbenp.prettier-vscode",
+				"inferrinizzard.prettier-sql-vscode",
+				"foxundermoon.shell-format",
+				"vinirossa.vscode-gitandgithub-pack",
+				"GitHub.vscode-github-actions",
+				"vmware.vscode-boot-dev-pack",
+				"redhat.vscode-xml",
+				"codezombiech.gitignore"
+			]
+		}
+	},
+	// "runArgs": [
+	// 	"--memory=8g",
+	// 	"--memory-swap=9g",
+	// 	"--cpus=8",
+	// 	"--oom-kill-disable=false"
+	// ],
+	// "containerEnv": {
+	// 	"JAVA_TOOL_OPTIONS": "-Xmx2g -Xms512m",
+	// 	"MAVEN_OPTS": "-Xmx1g -Xms256m",
+	// 	"SERVER_TOMCAT_MAX_THREADS": "50",
+	// 	"SERVER_TOMCAT_MIN_SPARE_THREADS": "10"
+	// },
+	// "forwardPorts": [],
+	"postCreateCommand": ". .devcontainer/devcontainer-setup.sh"
+	// "remoteUser": "root"
+}
