@@ -1,0 +1,90 @@
+services:
+  postgres:
+    container_name: motorizen-postgres
+    image: postgres:alpine
+    env_file:
+      - ./docker/.env.postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    profiles:
+      - dev
+      - all
+
+  pgadmin:
+    container_name: motorizen-pgadmin
+    image: dpage/pgadmin4
+    env_file:
+      - ./docker/.env.pgadmin
+    ports:
+      - 5050:5050
+    volumes:
+      - pg_admin:/var/lib/pgadmin
+    profiles:
+      - monitor
+      - all
+
+  redis:
+    container_name: motorizen-redis
+    image: redis:alpine
+    env_file:
+      - ./docker/.env.redis
+    environment:
+      REDIS_CONF_PATH: /home/redis/redis.conf
+    ports:
+      - 6379:6379
+    volumes:
+      - redis:/data
+      - redis_conf:/home/redis/redis.conf:ro
+      - redis_entrypoint:/home/redis/entrypoint-redis.sh
+      # - ./docker:/home/redis:rw
+      # - ./docker/entrypoint-redis.sh:/home/redis/entrypoint-redis.sh
+      # - ./docker/redis.conf:/home/redis/redis.conf
+    entrypoint: ["/home/redis/entrypoint-redis.sh"]
+    profiles:
+      - dev
+      - all
+
+  redisinsight:
+    container_name: motorizen-redisinsight
+    image: redislabs/redisinsight
+    env_file:
+      - ./docker/.env.redisinsight
+    ports:
+      - 5530:5530
+    volumes:
+      - redisinsight:/data
+    profiles:
+      - monitor
+      - all
+
+  rabbitmq:
+    container_name: motorizen-rabbitmq
+    image: rabbitmq:management-alpine
+    env_file:
+      - ./docker/.env.rabbitmq
+    ports:
+      - 5672:5672
+    volumes:
+      - /var/lib/rabbitmq
+    profiles:
+      - dev
+      - all
+
+volumes:
+  postgres:
+  pg_admin:
+  redis:
+  redisinsight:
+  rabbitmq:
+  redis_conf:
+    driver: local
+    name: redis_conf
+    driver_opts:
+      source: ${PWD}/docker/redis.conf
+  redis_entrypoint:
+    driver: local
+    name: redis_entrypoint
+    driver_opts:
+      source: ${PWD}/docker/entrypoint-redis.sh
