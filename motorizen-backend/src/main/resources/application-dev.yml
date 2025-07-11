@@ -1,0 +1,34 @@
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://motorizen-postgres:5432/motorizen_java_edition}
+    username: ${DB_USERNAME:motorizenapiteste}
+    password: ${DB_PASSWORD:motorizenapiteste}
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO:create-drop}
+    properties:
+      hibernate.format_sql: true
+  data:
+    redis:
+      host: ${REDIS_HOST:motorizen-redis}
+      port: ${REDIS_PORT:6379}
+      username: ${REDIS_USERNAME:admin}
+      password: ${REDIS_PASSWORD:admin}
+  rabbitmq:
+    host: ${RABBITMQ_HOST:motorizen-rabbitmq}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:admin}
+    password: ${RABBITMQ_PASSWORD:admin}
+    virtual-host: ${RABBITMQ_VIRTUAL_HOST:/}
+
+logging:
+  level:
+    root: DEBUG
+    '[com.efscode.motorizen_backend]': DEBUG
+
+app:
+  security:
+    jwt:
+      secret: suaChaveSecretaMuitoLonga
+      expiration: ${APP_SECURITY_JWT_EXPIRATION}
