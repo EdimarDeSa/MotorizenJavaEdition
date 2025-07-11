@@ -68,7 +68,7 @@ public class UserEntity implements EntityInterface<UserDTO> {
 
   @ToString.Exclude
   @EqualsAndHashCode.Exclude
-  @OneToMany(mappedBy = "userId")
+  @OneToMany(mappedBy = "user")
   private Set<VehicleEntity> vehicles;
 
   public UserEntity(UserDTO userDTO) {
