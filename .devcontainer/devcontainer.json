@@ -30,7 +30,7 @@
 				"GitHub.vscode-github-actions",
 				"vmware.vscode-boot-dev-pack",
 				"redhat.vscode-xml",
-				"codezombiech.gitignore"
+				"ionutvmi.path-autocomplete"
 			]
 		}
 	},
