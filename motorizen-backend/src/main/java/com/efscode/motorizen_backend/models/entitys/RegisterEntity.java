@@ -9,6 +9,9 @@ import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.efscode.motorizen_backend.interfaces.EntityInterface;
+import com.efscode.motorizen_backend.models.dtos.RegisterDTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,6 +21,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -26,18 +30,19 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterEntity {
+@Builder
+public class RegisterEntity implements EntityInterface<RegisterDTO> {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
   @OneToMany
   @JoinColumn(nullable = false, updatable = false)
-  private UserEntity userId;
+  private UserEntity user;
 
   @OneToMany
   @JoinColumn(nullable = false)
-  private VehicleEntity vehicleId;
+  private VehicleEntity vehicle;
 
   @Column(nullable = false)
   private Integer trips;
@@ -67,4 +72,32 @@ public class RegisterEntity {
 
   @Column(nullable = true)
   private LocalDateTime deletedAt;
+
+  public RegisterEntity(RegisterDTO brandDTO, UserEntity user, VehicleEntity vehicle) {
+    this.id = brandDTO.id();
+    this.user = user;
+    this.vehicle = vehicle;
+    this.trips = brandDTO.trips();
+    this.distance = brandDTO.distance();
+    this.meanConsuption = brandDTO.meanConsuption();
+    this.value = brandDTO.value();
+    this.workTime = brandDTO.workTime();
+    this.date = brandDTO.date();
+  }
+
+  @Override
+  public RegisterDTO toDTO() {
+    return RegisterDTO.builder()
+        .id(id)
+        .user(user.toDTO())
+        .vehicle(vehicle.toDTO())
+        .licensePlate(vehicle.getLicensePlate())
+        .trips(trips)
+        .distance(distance)
+        .meanConsuption(meanConsuption)
+        .value(value)
+        .workTime(workTime)
+        .date(date)
+        .build();
+  }
 }

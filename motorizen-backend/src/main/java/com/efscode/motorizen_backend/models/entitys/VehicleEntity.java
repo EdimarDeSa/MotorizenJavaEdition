@@ -6,6 +6,9 @@ import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.efscode.motorizen_backend.interfaces.EntityInterface;
+import com.efscode.motorizen_backend.models.dtos.VehicleDTO;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,6 +19,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,41 +28,42 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class VehicleEntity {
+@Builder
+public class VehicleEntity implements EntityInterface<VehicleDTO> {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
   @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(nullable = false)
-  private UserEntity userId;
+  private UserEntity user;
 
   @ManyToOne(cascade = CascadeType.PERSIST)
   @JoinColumn(nullable = false)
-  private BrandEntity brandId;
+  private BrandEntity brand;
 
   @ManyToOne(cascade = CascadeType.PERSIST)
   @JoinColumn(nullable = true)
-  private FuelTypeEntity fuelTypeId;
+  private FuelTypeEntity fuelType;
 
   @Column(nullable = false, length = 100)
   private String model;
-  
+
   @Column(nullable = false, length = 11)
   private String renavam;
-  
+
   @Column(nullable = false, length = 25)
   private String color;
-  
+
   @Column(nullable = false, length = 10)
   private String licensePlate;
-  
+
   @Column(nullable = false, precision = 10, scale = 2)
   private Double fuelCapacity;
-  
+
   @Column(nullable = false, precision = 10, scale = 2)
   private Double odometer;
-  
+
   @Column(nullable = false)
   private Boolean isActive;
 
@@ -72,4 +77,35 @@ public class VehicleEntity {
 
   @Column(nullable = true)
   private LocalDateTime deletedAt;
+
+  public VehicleEntity(VehicleDTO vehicleDTO, UserEntity user, BrandEntity brand, FuelTypeEntity vehicle) {
+    this.id = vehicleDTO.id();
+    this.user = user;
+    this.brand = brand;
+    this.fuelType = vehicle;
+    this.model = vehicleDTO.model();
+    this.renavam = vehicleDTO.renavam();
+    this.color = vehicleDTO.color();
+    this.licensePlate = vehicleDTO.licensePlate();
+    this.fuelCapacity = vehicleDTO.fuelCapacity();
+    this.odometer = vehicleDTO.odometer();
+    this.isActive = vehicleDTO.isActive();
+  }
+
+  @Override
+  public VehicleDTO toDTO() {
+    return VehicleDTO.builder()
+        .id(id)
+        .user(user.toDTO())
+        .brand(brand.toDTO())
+        .fuelType(fuelType.toDTO())
+        .model(model)
+        .renavam(renavam)
+        .color(color)
+        .licensePlate(licensePlate)
+        .fuelCapacity(fuelCapacity)
+        .odometer(odometer)
+        .isActive(isActive)
+        .build();
+  }
 }

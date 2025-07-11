@@ -8,6 +8,9 @@ import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.efscode.motorizen_backend.interfaces.EntityInterface;
+import com.efscode.motorizen_backend.models.dtos.UserDTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,6 +19,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -26,7 +30,8 @@ import lombok.ToString;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserEntity {
+@Builder
+public class UserEntity implements EntityInterface<UserDTO> {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
@@ -66,6 +71,15 @@ public class UserEntity {
   @OneToMany(mappedBy = "userId")
   private Set<VehicleEntity> vehicles;
 
+  public UserEntity(UserDTO userDTO) {
+    this.id = userDTO.id();
+    this.firstName = userDTO.firstName();
+    this.lastName = userDTO.lastName();
+    this.email = userDTO.email();
+    this.birthdate = userDTO.birthdate();
+    this.isActive = userDTO.isActive();
+  }
+
   public String getFullName() {
     return firstName + " " + lastName;
   }
@@ -81,5 +95,17 @@ public class UserEntity {
       thisYearAge--;
     }
     return thisYearAge;
+  }
+
+  @Override
+  public UserDTO toDTO() {
+    return UserDTO.builder()
+        .id(id)
+        .firstName(firstName)
+        .lastName(lastName)
+        .email(email)
+        .birthdate(birthdate)
+        .isActive(isActive)
+        .build();
   }
 }
