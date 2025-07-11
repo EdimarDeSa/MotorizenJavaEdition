@@ -7,7 +7,10 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - postgres:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
+    hostname: motorizen-postgres
+    networks:
+      - devcontainer_net
     profiles:
       - dev
       - all
@@ -20,7 +23,7 @@ services:
     ports:
       - 5050:5050
     volumes:
-      - pg_admin:/var/lib/pgadmin
+      - pgadmin_data:/var/lib/pgadmin
     profiles:
       - monitor
       - all
@@ -30,18 +33,16 @@ services:
     image: redis:alpine
     env_file:
       - ./docker/.env.redis
-    environment:
-      REDIS_CONF_PATH: /home/redis/redis.conf
     ports:
       - 6379:6379
+    hostname: motorizen-redis
+    networks:
+      - devcontainer_net
     volumes:
-      - redis:/data
-      - redis_conf:/home/redis/redis.conf:ro
-      - redis_entrypoint:/home/redis/entrypoint-redis.sh
-      # - ./docker:/home/redis:rw
-      # - ./docker/entrypoint-redis.sh:/home/redis/entrypoint-redis.sh
-      # - ./docker/redis.conf:/home/redis/redis.conf
-    entrypoint: ["/home/redis/entrypoint-redis.sh"]
+      - redis_data:/data
+      - /home/edimar/Projetos/MotorizenJavaEdition/docker/redis-entrypoint.sh:/home/redis/entrypoint.sh
+      - /home/edimar/Projetos/MotorizenJavaEdition/docker/redis.conf:/tmp/redis.conf
+    entrypoint: ["sh", "/home/redis/entrypoint.sh"]
     profiles:
       - dev
       - all
@@ -54,7 +55,7 @@ services:
     ports:
       - 5530:5530
     volumes:
-      - redisinsight:/data
+      - redisinsight_data:/data
     profiles:
       - monitor
       - all
@@ -64,27 +65,30 @@ services:
     image: rabbitmq:management-alpine
     env_file:
       - ./docker/.env.rabbitmq
+    hostname: motorizen-rabbitmq
+    networks:
+      - devcontainer_net
     ports:
       - 5672:5672
+      - 15672:15672 # Management UI
     volumes:
-      - /var/lib/rabbitmq
+      - rabbitmq_data:/var/lib/rabbitmq
     profiles:
       - dev
       - all
 
 volumes:
-  postgres:
-  pg_admin:
-  redis:
-  redisinsight:
-  rabbitmq:
-  redis_conf:
+  postgres_data:
     driver: local
-    name: redis_conf
-    driver_opts:
-      source: ${PWD}/docker/redis.conf
-  redis_entrypoint:
+  pgadmin_data:
     driver: local
-    name: redis_entrypoint
-    driver_opts:
-      source: ${PWD}/docker/entrypoint-redis.sh
+  redis_data:
+    driver: local
+  redisinsight_data:
+    driver: local
+  rabbitmq_data:
+    driver: local
+
+networks:
+  devcontainer_net:
+    external: true
