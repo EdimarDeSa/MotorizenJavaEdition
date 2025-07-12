@@ -35,15 +35,15 @@ public class VehicleEntity implements EntityInterface<VehicleDTO> {
   private UUID id;
 
   @ManyToOne(cascade = CascadeType.ALL)
-  @JoinColumn(nullable = false)
+  @JoinColumn(nullable = false, name = "user_id")
   private UserEntity user;
 
   @ManyToOne(cascade = CascadeType.PERSIST)
-  @JoinColumn(nullable = false)
+  @JoinColumn(nullable = false, name = "brand_id")
   private BrandEntity brand;
 
   @ManyToOne(cascade = CascadeType.PERSIST)
-  @JoinColumn(nullable = true)
+  @JoinColumn(nullable = true, name = "fuel_type_id")
   private FuelTypeEntity fuelType;
 
   @Column(nullable = false, length = 100)
@@ -52,20 +52,24 @@ public class VehicleEntity implements EntityInterface<VehicleDTO> {
   @Column(nullable = false, length = 11)
   private String renavam;
 
+  @Column(nullable = false)
+  private Integer year;
+
   @Column(nullable = false, length = 25)
   private String color;
 
   @Column(nullable = false, length = 10)
   private String licensePlate;
 
-  @Column(nullable = false, precision = 10, scale = 2)
+  @Column(nullable = false, precision = 10, scale = 4)
   private Double fuelCapacity;
 
-  @Column(nullable = false, precision = 10, scale = 2)
+  @Column(nullable = false, precision = 10, scale = 4)
   private Double odometer;
 
   @Column(nullable = false)
-  private Boolean isActive;
+  @Builder.Default
+  private Boolean isActive = true;
 
   @CreationTimestamp
   @Column(nullable = false, updatable = false)
@@ -84,6 +88,7 @@ public class VehicleEntity implements EntityInterface<VehicleDTO> {
     this.brand = brand;
     this.fuelType = vehicle;
     this.model = vehicleDTO.model();
+    this.year = vehicleDTO.year();
     this.renavam = vehicleDTO.renavam();
     this.color = vehicleDTO.color();
     this.licensePlate = vehicleDTO.licensePlate();
@@ -102,6 +107,7 @@ public class VehicleEntity implements EntityInterface<VehicleDTO> {
         .model(model)
         .renavam(renavam)
         .color(color)
+        .year(year)
         .licensePlate(licensePlate)
         .fuelCapacity(fuelCapacity)
         .odometer(odometer)

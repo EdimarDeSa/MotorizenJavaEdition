@@ -1,9 +1,6 @@
 package com.efscode.motorizen_backend.models.entitys;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
-
-import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,6 +13,7 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name = "backlog")
@@ -28,11 +26,11 @@ public class BackLogEntity {
   private Long id;
 
   @OneToOne
-  @JoinColumn(nullable = false, updatable = false)
-  private BackLogEventType backlogEventTypeId;
+  @JoinColumn(nullable = false, updatable = false, name = "backlog_event_type_id")
+  private BackLogEventTypeEntity backlogEventType;
 
-  @Column(nullable = false)
-  private UUID userId;
+  @Column(nullable = false, updatable = false, name = "user_id")
+  private UserEntity user;
 
   @Column(nullable = false)
   private String description;

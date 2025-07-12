@@ -2,10 +2,10 @@ dev_up:
 	docker compose --profile dev up -d
 
 dev_down:
-	docker compose --profile dev down -v
+	docker compose --profile dev down
 
 dev_reset:
-	docker compose --profile dev down -v
+	docker compose --profile dev down
 	docker compose --profile dev up -d
 
 monitor_up:

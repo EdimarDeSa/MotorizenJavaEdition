@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BackLogEventType {
+public class BackLogEventTypeEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Integer id;
@@ -31,8 +31,8 @@ public class BackLogEventType {
   private String name;
 
   @OneToOne
-  @JoinColumn(nullable = false, updatable = false)
-  private BackLogSeverity backLogSeverityId;
+  @JoinColumn(nullable = false, updatable = false, name = "backlog_severity_id")
+  private BackLogSeverityEntity backLogSeverity;
 
   @CreationTimestamp
   @Column(nullable = false, updatable = false)

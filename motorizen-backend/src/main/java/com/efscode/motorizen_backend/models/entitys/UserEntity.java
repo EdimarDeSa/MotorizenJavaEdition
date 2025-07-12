@@ -36,7 +36,7 @@ public class UserEntity implements EntityInterface<UserDTO> {
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
-  @Column(length = 100, nullable = false)
+  @Column(length = 50, nullable = false)
   private String firstName;
 
   @Column(length = 100, nullable = false)
@@ -53,7 +53,12 @@ public class UserEntity implements EntityInterface<UserDTO> {
   private LocalDate birthdate;
 
   @Column(nullable = false)
-  private Boolean isActive;
+  @Builder.Default
+  private Boolean isActive = true;
+
+  @Column(nullable = false)
+  @Builder.Default
+  private Boolean isAdministrator = false;
 
   @CreationTimestamp
   @Column(nullable = false, updatable = false)
@@ -78,6 +83,7 @@ public class UserEntity implements EntityInterface<UserDTO> {
     this.email = userDTO.email();
     this.birthdate = userDTO.birthdate();
     this.isActive = userDTO.isActive();
+    this.isAdministrator = userDTO.isAdministrator();
   }
 
   public String getFullName() {
@@ -97,7 +103,6 @@ public class UserEntity implements EntityInterface<UserDTO> {
     return thisYearAge;
   }
 
-  @Override
   public UserDTO toDTO() {
     return UserDTO.builder()
         .id(id)

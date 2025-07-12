@@ -6,12 +6,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.UUID;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import com.efscode.motorizen_backend.interfaces.EntityInterface;
-import com.efscode.motorizen_backend.models.dtos.RegisterDTO;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,6 +18,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import com.efscode.motorizen_backend.interfaces.EntityInterface;
+import com.efscode.motorizen_backend.models.dtos.RegisterDTO;
 
 @Entity
 @Table(name = "register")
@@ -37,20 +36,20 @@ public class RegisterEntity implements EntityInterface<RegisterDTO> {
   private UUID id;
 
   @OneToOne
-  @JoinColumn(nullable = false, updatable = false)
+  @JoinColumn(nullable = false, updatable = false, name = "user_id")
   private UserEntity user;
 
   @OneToOne
-  @JoinColumn(nullable = false, updatable = false)
+  @JoinColumn(nullable = false, updatable = false, name = "vehicle_id")
   private VehicleEntity vehicle;
 
   @Column(nullable = false)
-  private Integer trips;
+  private Integer numberOfTrips;
 
-  @Column(nullable = false, precision = 10, scale = 2)
+  @Column(nullable = false, precision = 10, scale = 4)
   private Double distance;
 
-  @Column(nullable = false, precision = 10, scale = 2)
+  @Column(nullable = false, precision = 10, scale = 4)
   private Double meanConsuption;
 
   @Column(nullable = false, precision = 10, scale = 2)
@@ -60,7 +59,7 @@ public class RegisterEntity implements EntityInterface<RegisterDTO> {
   private LocalTime workTime;
 
   @Column(nullable = false)
-  private LocalDate date;
+  private LocalDate registerDate;
 
   @CreationTimestamp
   @Column(nullable = false, updatable = false)
@@ -73,16 +72,16 @@ public class RegisterEntity implements EntityInterface<RegisterDTO> {
   @Column(nullable = true)
   private LocalDateTime deletedAt;
 
-  public RegisterEntity(RegisterDTO brandDTO, UserEntity user, VehicleEntity vehicle) {
-    this.id = brandDTO.id();
+  public RegisterEntity(RegisterDTO registryDTO, UserEntity user, VehicleEntity vehicle) {
+    this.id = registryDTO.id();
     this.user = user;
     this.vehicle = vehicle;
-    this.trips = brandDTO.trips();
-    this.distance = brandDTO.distance();
-    this.meanConsuption = brandDTO.meanConsuption();
-    this.value = brandDTO.value();
-    this.workTime = brandDTO.workTime();
-    this.date = brandDTO.date();
+    this.numberOfTrips = registryDTO.numberOfTrips();
+    this.distance = registryDTO.distance();
+    this.meanConsuption = registryDTO.meanConsuption();
+    this.value = registryDTO.value();
+    this.workTime = registryDTO.workTime();
+    this.registerDate = registryDTO.registerDate();
   }
 
   @Override
@@ -91,13 +90,12 @@ public class RegisterEntity implements EntityInterface<RegisterDTO> {
         .id(id)
         .user(user.toDTO())
         .vehicle(vehicle.toDTO())
-        .licensePlate(vehicle.getLicensePlate())
-        .trips(trips)
+        .numberOfTrips(numberOfTrips)
         .distance(distance)
         .meanConsuption(meanConsuption)
         .value(value)
         .workTime(workTime)
-        .date(date)
+        .registerDate(registerDate)
         .build();
   }
 }

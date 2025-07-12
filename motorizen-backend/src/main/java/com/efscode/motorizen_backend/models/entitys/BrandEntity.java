@@ -30,7 +30,7 @@ public class BrandEntity implements EntityInterface<BrandDTO> {
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Integer id;
 
-  @Column(nullable = false, unique = true, length = 20)
+  @Column(nullable = false, unique = true, length = 50)
   private String name;
 
   @CreationTimestamp

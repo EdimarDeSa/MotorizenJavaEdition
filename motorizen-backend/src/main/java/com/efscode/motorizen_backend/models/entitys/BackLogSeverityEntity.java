@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BackLogSeverity {
+public class BackLogSeverityEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Integer id;
