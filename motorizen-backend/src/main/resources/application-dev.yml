@@ -24,8 +24,8 @@ spring:
 
 logging:
   level:
-    root: DEBUG
-    '[com.efscode.motorizen_backend]': DEBUG
+    root: INFO
+    '[com.efscode.motorizen_backend]': INFO
 
 app:
   security:

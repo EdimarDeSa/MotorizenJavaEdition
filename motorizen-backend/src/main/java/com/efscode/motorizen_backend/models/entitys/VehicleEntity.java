@@ -1,5 +1,6 @@
 package com.efscode.motorizen_backend.models.entitys;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -62,10 +63,10 @@ public class VehicleEntity implements EntityInterface<VehicleDTO> {
   private String licensePlate;
 
   @Column(nullable = false, precision = 10, scale = 4)
-  private Double fuelCapacity;
+  private BigDecimal fuelCapacity;
 
   @Column(nullable = false, precision = 10, scale = 4)
-  private Double odometer;
+  private BigDecimal odometer;
 
   @Column(nullable = false)
   @Builder.Default

@@ -47,10 +47,10 @@ public class RegisterEntity implements EntityInterface<RegisterDTO> {
   private Integer numberOfTrips;
 
   @Column(nullable = false, precision = 10, scale = 4)
-  private Double distance;
+  private BigDecimal distance;
 
   @Column(nullable = false, precision = 10, scale = 4)
-  private Double meanConsuption;
+  private BigDecimal meanConsuption;
 
   @Column(nullable = false, precision = 10, scale = 2)
   private BigDecimal value;

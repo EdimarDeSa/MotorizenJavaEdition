@@ -8,7 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,11 +25,12 @@ public class BackLogEntity {
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Long id;
 
-  @OneToOne
+  @ManyToOne
   @JoinColumn(nullable = false, updatable = false, name = "backlog_event_type_id")
   private BackLogEventTypeEntity backlogEventType;
 
-  @Column(nullable = false, updatable = false, name = "user_id")
+  @ManyToOne
+  @JoinColumn(nullable = false, updatable = false, name = "user_id")
   private UserEntity user;
 
   @Column(nullable = false)

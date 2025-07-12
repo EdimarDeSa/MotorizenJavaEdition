@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-MotorizenBackendApplication<motorizen-backend>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.efscode.motorizen_backend.MotorizenBackendApplication",
+      "projectName": "motorizen-backend",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}

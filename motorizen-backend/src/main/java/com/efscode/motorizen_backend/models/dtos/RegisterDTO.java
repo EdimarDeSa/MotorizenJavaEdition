@@ -16,18 +16,18 @@ public record RegisterDTO(
     VehicleDTO vehicle,
     LocalTime workTime,
     LocalDate registerDate,
-    Double distance,
-    Double meanConsuption,
+    BigDecimal distance,
+    BigDecimal meanConsuption,
     Integer numberOfTrips,
     BigDecimal value) implements DTOInterface {
 
   @Override
   public void validate() {
-    if (distance < 0) {
+    if (distance.compareTo(BigDecimal.ZERO) < 0) {
       throw new IllegalArgumentException("distance cannot be negative");
     }
 
-    if (meanConsuption < 0) {
+    if (meanConsuption.compareTo(BigDecimal.ZERO) < 0) {
       throw new IllegalArgumentException("meanConsuption cannot be negative");
     }
 

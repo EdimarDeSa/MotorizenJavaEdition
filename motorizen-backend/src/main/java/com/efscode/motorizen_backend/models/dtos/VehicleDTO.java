@@ -1,5 +1,6 @@
 package com.efscode.motorizen_backend.models.dtos;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.UUID;
 
@@ -18,8 +19,8 @@ public record VehicleDTO(
   Integer year,
   String color,
   String licensePlate,
-  Double fuelCapacity,
-  Double odometer,
+  BigDecimal fuelCapacity,
+  BigDecimal odometer,
   Boolean isActive
 ) implements DTOInterface {
 
@@ -41,11 +42,11 @@ public record VehicleDTO(
       throw new IllegalArgumentException("licensePlate is too long");
     }
 
-    if (fuelCapacity < 0) {
+    if (fuelCapacity.compareTo(BigDecimal.ZERO) < 0) {
       throw new IllegalArgumentException("fuelCapacity cannot be negative");
     }
 
-    if (odometer < 0) {
+    if (odometer.compareTo(BigDecimal.ZERO) < 0) {
       throw new IllegalArgumentException("odometer cannot be negative");
     }
 
