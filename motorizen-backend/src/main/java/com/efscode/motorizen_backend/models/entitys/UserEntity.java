@@ -2,13 +2,17 @@ package com.efscode.motorizen_backend.models.entitys;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.Set;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.efscode.motorizen_backend.interfaces.EntityInterface;
+import com.efscode.motorizen_backend.models.dtos.NewUser;
 import com.efscode.motorizen_backend.models.dtos.UserDTO;
 
 import jakarta.persistence.Column;
@@ -31,7 +35,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserEntity implements EntityInterface<UserDTO> {
+public class UserEntity implements EntityInterface<UserDTO>, UserDetails {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
@@ -76,14 +80,14 @@ public class UserEntity implements EntityInterface<UserDTO> {
   @OneToMany(mappedBy = "user")
   private Set<VehicleEntity> vehicles;
 
-  public UserEntity(UserDTO userDTO) {
-    this.id = userDTO.id();
-    this.firstName = userDTO.firstName();
-    this.lastName = userDTO.lastName();
-    this.email = userDTO.email();
-    this.birthdate = userDTO.birthdate();
-    this.isActive = userDTO.isActive();
-    this.isAdministrator = userDTO.isAdministrator();
+  public UserEntity(NewUser userDTO, String passwordHash) {
+    this.firstName = userDTO.getFirstName();
+    this.lastName = userDTO.getLastName();
+    this.email = userDTO.getEmail();
+    this.password = passwordHash;
+    this.birthdate = userDTO.getBirthdate();
+    this.isActive = true;
+    this.isAdministrator = false;
   }
 
   public String getFullName() {
@@ -111,6 +115,22 @@ public class UserEntity implements EntityInterface<UserDTO> {
         .email(email)
         .birthdate(birthdate)
         .isActive(isActive)
+        .isAdministrator(isAdministrator)
         .build();
+  }
+
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    Set<GrantedAuthority> authorities = Set.of(() -> "ROLE_USER");
+
+    if (isAdministrator) {
+      authorities.add(() -> "ROLE_ADMIN");
+    }
+
+    return authorities;
+  }
+
+  @Override
+  public String getUsername() {
+    return email;
   }
 }
