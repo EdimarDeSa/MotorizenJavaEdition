@@ -16,7 +16,6 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"Codeium.codeium",
 				"cweijan.dbclient-jdbc",
 				"yzhang.markdown-all-in-one",
 				"cweijan.vscode-redis-client",
