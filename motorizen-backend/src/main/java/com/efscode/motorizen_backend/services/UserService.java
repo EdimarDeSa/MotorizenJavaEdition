@@ -1,12 +1,12 @@
 package com.efscode.motorizen_backend.services;
 
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.UUID;
-
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.efscode.motorizen_backend.models.dtos.UserDTO;
+import com.efscode.motorizen_backend.Utils.Validators;
+import com.efscode.motorizen_backend.enums.MotoriZenResponseCodeEnum;
+import com.efscode.motorizen_backend.errors.MotorizenException;
+import com.efscode.motorizen_backend.models.dtos.NewUser;
 import com.efscode.motorizen_backend.models.entitys.UserEntity;
 import com.efscode.motorizen_backend.repositorys.UserRepository;
 
@@ -18,30 +18,20 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UserService {
   private final UserRepository userRepo;
+  private final Validators validators;
+  private final PasswordEncoder passwordEncoder;
 
-  public UserDTO getMe(UUID user_id) {
+  public void createNewUser(NewUser newUser) {
     try {
-      UserEntity user = userRepo.findById(user_id).get();
+      validators.validateNewUser(newUser);
+      String passwordHash = passwordEncoder.encode(newUser.getPassword());
 
-      return toUserDTO(user);
+      UserEntity user = new UserEntity(newUser, passwordHash);
 
-    } catch (NoSuchElementException e) {
-      log.error(null, e);
-      throw new NoSuchElementException("User not found");
+      userRepo.save(user);
+    } catch (IllegalArgumentException e) {
+      log.error(e.getMessage());
+      throw new MotorizenException(MotoriZenResponseCodeEnum.UNKNOWN_ERROR);
     }
-
   }
-
-  private UserDTO toUserDTO(UserEntity user) {
-    return UserDTO.builder()
-        .id(user.getId())
-        .firstName(user.getFirstName())
-        .lastName(user.getLastName())
-        .email(user.getEmail())
-        .birthdate(user.getBirthdate())
-        .isActive(user.getIsActive())
-        .isAdministrator(user.getIsAdministrator())
-        .build();
-  }
-
 }
