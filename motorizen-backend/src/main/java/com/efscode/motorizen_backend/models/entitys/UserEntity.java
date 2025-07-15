@@ -3,6 +3,7 @@ package com.efscode.motorizen_backend.models.entitys;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -120,7 +121,9 @@ public class UserEntity implements EntityInterface<UserDTO>, UserDetails {
   }
 
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    Set<GrantedAuthority> authorities = Set.of(() -> "ROLE_USER");
+    Set<GrantedAuthority> authorities = new HashSet<>();
+
+    authorities.add(() -> "ROLE_USER");
 
     if (isAdministrator) {
       authorities.add(() -> "ROLE_ADMIN");
