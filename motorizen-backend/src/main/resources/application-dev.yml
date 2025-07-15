@@ -21,6 +21,13 @@ spring:
     username: ${RABBITMQ_USERNAME:admin}
     password: ${RABBITMQ_PASSWORD:admin}
     virtual-host: ${RABBITMQ_VIRTUAL_HOST:/}
+  security:
+    user:
+      name: admin
+      password: $2a$12$glDdI7XriCKPr/KfzQAb3.rH.FjFyxw9RwzIRPl1A4hA6vAKLTXme
+      roles:
+      - administrator
+      - user
 
 logging:
   level:
@@ -28,7 +35,14 @@ logging:
     '[com.efscode.motorizen_backend]': INFO
 
 app:
+  info:
+    name: "Motorizen Api"
+    version: ${APP_VERSION:0.1.0}
+    description: "Motorizen Api"
   security:
     jwt:
       secret: suaChaveSecretaMuitoLonga
-      expiration: ${APP_SECURITY_JWT_EXPIRATION}
+      expiration: ${APP_SECURITY_JWT_EXPIRATION:3600}
+      refreshSecret: suaChaveSecretaMuitoLonga2
+      refreshExpiration: ${APP_SECURITY_JWT_REFRESH_EXPIRATION:86400}
+      issuer: "motorizen_dev"

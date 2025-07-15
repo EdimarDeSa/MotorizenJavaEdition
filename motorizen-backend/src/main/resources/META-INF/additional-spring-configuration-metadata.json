@@ -1,12 +1,44 @@
-{"properties": [
-  {
-    "name": "app.security.jwt.secret",
-    "type": "java.lang.String",
-    "description": "A description for 'app.security.jwt.secret'"
-  },
-  {
-    "name": "app.security.jwt.expiration",
-    "type": "java.lang.Integer",
-    "description": "A description for 'app.security.jwt.expiration'"
-  }
-]}
+{
+  "properties": [
+    {
+      "name": "app.security.jwt.secret",
+      "type": "java.lang.String",
+      "description": "A description for 'app.security.jwt.secret'"
+    },
+    {
+      "name": "app.security.jwt.expiration",
+      "type": "java.lang.Integer",
+      "description": "A description for 'app.security.jwt.expiration'"
+    },
+    {
+      "name": "app.security.jwt.refreshSecret",
+      "type": "java.lang.String",
+      "description": "A description for 'app.security.jwt.refreshSecret'"
+    },
+    {
+      "name": "app.security.jwt.refreshExpiration",
+      "type": "java.lang.Integer",
+      "description": "A description for 'app.security.jwt.refreshExpiration'"
+    },
+    {
+      "name": "app.security.jwt.issuer",
+      "type": "java.lang.String",
+      "description": "A description for 'app.security.jwt.issuer'"
+    },
+    {
+      "name": "app.info.description",
+      "type": "java.lang.String",
+      "description": "A description for 'app.info.description'"
+    },
+    {
+      "name": "app.info.version",
+      "type": "java.lang.String",
+      "description": "A description for 'app.info.version'"
+    },
+    {
+      "name": "app.info.name",
+      "type": "java.lang.String",
+      "description": "A description for 'app.info.name'"
+    }
+  ]
+}
