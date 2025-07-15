@@ -4,8 +4,6 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.UUID;
 
-import com.efscode.motorizen_backend.interfaces.DTOInterface;
-
 import lombok.Builder;
 
 @Builder
@@ -22,9 +20,8 @@ public record VehicleDTO(
   BigDecimal fuelCapacity,
   BigDecimal odometer,
   Boolean isActive
-) implements DTOInterface {
+) {
 
-  @Override
   public void validate() {
     if (model.length() > 100) {
       throw new IllegalArgumentException("model is too long");
@@ -62,9 +59,9 @@ public record VehicleDTO(
       throw new IllegalArgumentException("year cannot be greater than current year");
     }
 
-    user.validate();
-    brand.validate();
-    fuelType.validate();
+    // user.validate();
+    // brand.validate();
+    // fuelType.validate();
   }
 
 }

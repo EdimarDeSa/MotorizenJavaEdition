@@ -5,8 +5,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.UUID;
 
-import com.efscode.motorizen_backend.interfaces.DTOInterface;
-
 import lombok.Builder;
 
 @Builder
@@ -19,9 +17,8 @@ public record RegisterDTO(
     BigDecimal distance,
     BigDecimal meanConsuption,
     Integer numberOfTrips,
-    BigDecimal value) implements DTOInterface {
+    BigDecimal value) {
 
-  @Override
   public void validate() {
     if (distance.compareTo(BigDecimal.ZERO) < 0) {
       throw new IllegalArgumentException("distance cannot be negative");
@@ -87,7 +84,7 @@ public record RegisterDTO(
       return;
     }
 
-    user.validate();
+    // user.validate();
 
     if (vehicle == null) {
       return;
