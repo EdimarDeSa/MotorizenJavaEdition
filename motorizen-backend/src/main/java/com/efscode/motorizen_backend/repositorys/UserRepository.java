@@ -9,4 +9,7 @@ import com.efscode.motorizen_backend.models.entitys.UserEntity;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, UUID> {
+  public UserEntity findByEmail(String email);
+
+  public Boolean existsByEmail(String email);
 }
