@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import com.efscode.motorizen_backend.enums.MotoriZenResponseCodeEnum;
 import com.efscode.motorizen_backend.errors.MotorizenException;
 import com.efscode.motorizen_backend.models.dtos.BrandDTO;
+import com.efscode.motorizen_backend.models.dtos.FuelTypeDTO;
 import com.efscode.motorizen_backend.models.dtos.NewUser;
 import com.efscode.motorizen_backend.models.dtos.UserDTO;
 import com.efscode.motorizen_backend.repositorys.BackLogRepository;
@@ -18,7 +19,6 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @Component
-@SuppressWarnings("unused")
 public class Validators {
   private final UserRepository userRepo;
   private final BrandRepository brandRepo;
@@ -29,6 +29,14 @@ public class Validators {
 
   public void validateBrand(BrandDTO brand) {
     validateLength(brand.name(), 2, 50, MotoriZenResponseCodeEnum.INVALID_BRAND_NAME);
+  }
+
+  public void validateNewBrand(BrandDTO brand) {
+    validateBrand(brand);
+
+    if (brandRepo.existsByName(brand.name())) {
+      throw new MotorizenException(MotoriZenResponseCodeEnum.BRAND_ALREADY_EXISTS);
+    }
   }
 
   public void validateUser(UserDTO user) {
@@ -60,6 +68,14 @@ public class Validators {
   private void validateLength(String toValidate, int minLength, int maxLength, MotoriZenResponseCodeEnum rc) {
     if (toValidate.length() < minLength || toValidate.length() > maxLength) {
       throw new MotorizenException(rc);
+    }
+  }
+
+  public void validateFuelType(FuelTypeDTO dto) {
+    validateLength(dto.name(), 2, 20, MotoriZenResponseCodeEnum.INVALID_FUEL_TYPE_NAME);
+
+    if (fuelTypeRepo.existsByName(dto.name())) {
+      throw new MotorizenException(MotoriZenResponseCodeEnum.FUEL_TYPE_ALREADY_EXISTS);
     }
   }
 }

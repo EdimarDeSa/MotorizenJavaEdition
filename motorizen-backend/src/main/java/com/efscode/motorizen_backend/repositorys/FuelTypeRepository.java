@@ -7,5 +7,7 @@ import com.efscode.motorizen_backend.models.entitys.FuelTypeEntity;
 
 @Repository
 public interface FuelTypeRepository extends JpaRepository<FuelTypeEntity, Integer> {
+  Boolean existsByName(String name);
 
+  Integer findIdByName(String name);
 }

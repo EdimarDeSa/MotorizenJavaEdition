@@ -15,8 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("/auth")
@@ -35,8 +35,19 @@ public class AuthController {
     return ResponseEntity.ok(content);
   }
 
+  @GetMapping("/renew-token/{refreshToken}")
+  public ResponseEntity<ApiResponseBody<TokenDTO>> renewToken(@PathVariable String refreshToken) {
+    log.debug("Iniciando renewToken");
+
+    TokenDTO token = authService.renewToken(refreshToken);
+    ApiResponseBody<TokenDTO> content = ApiResponseBody.ok(token);
+
+    return ResponseEntity.ok(content);
+  }
+
   @GetMapping("/logout")
-  public ResponseEntity<ApiResponseBody<Void>> logout(@RequestHeader(name = "Authorization") String token) {
+  public ResponseEntity<ApiResponseBody<Void>> logout() {
+    // TODO: Criar limpeza dos caches
     ApiResponseBody<Void> response = ApiResponseBody.ok(null);
     return ResponseEntity.ok(response);
   }
