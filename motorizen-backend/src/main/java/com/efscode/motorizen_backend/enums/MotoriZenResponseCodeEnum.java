@@ -24,11 +24,14 @@ public enum MotoriZenResponseCodeEnum {
   MISSING_CSRF_TOKEN(-400, HttpStatus.FORBIDDEN, "Missing CSRF token."),
   INVALID_CSRF_TOKEN(-401, HttpStatus.FORBIDDEN, "Invalid CSRF token."),
   INVALID_USER_NAME(-402, HttpStatus.BAD_REQUEST, "Invalid user name."),
+  UNAUTHORIZED_ACCESS(-403, HttpStatus.FORBIDDEN, "Unauthorized access."),
+
 
   // Erros de login -2xx
   LOGIN_ERROR(-200, HttpStatus.UNAUTHORIZED, "Login error."),
   LOGOUT_ERROR(-201, HttpStatus.UNAUTHORIZED, "Logout error."),
   INVALID_CREDENTIALS(-202, HttpStatus.UNAUTHORIZED, "Invalid credentials."),
+  INVALID_REFRESH_TOKEN(-203, HttpStatus.UNAUTHORIZED, "Invalid refresh token."),
 
   // Erros de veículos -3xx
   VEHICLE_NOT_FOUND(-300, HttpStatus.NOT_FOUND, "Vehicle not found."),
@@ -41,13 +44,16 @@ public enum MotoriZenResponseCodeEnum {
   INVALID_BRAND_NAME(-313, HttpStatus.BAD_REQUEST, "Invalid brand name."),
   INVALID_USER_EMAIL(-314, HttpStatus.BAD_REQUEST, "Invalid user email."),
   USER_MUST_BE_18(-315, HttpStatus.BAD_REQUEST, "User must be at least 18 years old."),
+  BRAND_ALREADY_EXISTS(-316, HttpStatus.CONFLICT, "Brand already exists."),
+  INVALID_FUEL_TYPE_NAME(-317, HttpStatus.BAD_REQUEST, "Invalid fuel type name."),
+  FUEL_TYPE_ALREADY_EXISTS(-318, HttpStatus.CONFLICT, "Fuel type already exists."),
 
   // Erros de relatórios -4xx
   INVALID_SORT_KEY(-800, HttpStatus.BAD_REQUEST, "Invalid sort key."),
 
   // Erros internos -9xx
   CONFIG_FILE_NOT_FOUND(-900, HttpStatus.INTERNAL_SERVER_ERROR, "Config file not found."),
-  UNKNOWN_ERROR(-999, HttpStatus.INTERNAL_SERVER_ERROR, "Unknown error.");
+  UNKNOWN_ERROR(-999, HttpStatus.INTERNAL_SERVER_ERROR, "Não foi possível processar a requisição. Tente novamente mais tarde ou entre em contato com o suporte.");
 
   private final Integer responseCode;
   private final HttpStatus httpStatus;
