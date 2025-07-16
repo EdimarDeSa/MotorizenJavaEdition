@@ -147,9 +147,13 @@ public class AuthService {
     return decodedJWT;
   }
 
-  public UserEntity selectUserById(UUID userId) {
-    return userRepo.findById(userId)
-        .orElseThrow(() -> new MotorizenException(MotoriZenResponseCodeEnum.USER_NOT_FOUND));
+  public UserEntity selectUserByIdAndDeletedAtIsNull(UUID userId) {
+    UserEntity user = userRepo.findByIdAndDeletedAtIsNull(userId);
+
+    if (user == null)
+      throw new MotorizenException(MotoriZenResponseCodeEnum.USER_NOT_FOUND);
+
+    return user;
   }
 
   public TokenDTO renewToken(String refreshToken) {
@@ -161,7 +165,7 @@ public class AuthService {
       DecodedJWT decodedJWT = verifier.verify(refreshToken);
       String userId = decodedJWT.getSubject();
 
-      UserEntity user = selectUserById(UUID.fromString(userId));
+      UserEntity user = selectUserByIdAndDeletedAtIsNull(UUID.fromString(userId));
 
       Instant expirationTime = getExpirationTime(jwtExpiration);
       String newToken = generateToken(user.toDTO(), expirationTime);

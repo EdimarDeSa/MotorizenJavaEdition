@@ -41,7 +41,7 @@ public class TokenAuthFilter extends OncePerRequestFilter {
 
       UUID userId = UUID.fromString(decodedJWT.getSubject());
 
-      UserEntity user = authService.selectUserById(userId);
+      UserEntity user = authService.selectUserByIdAndDeletedAtIsNull(userId);
 
       log.info("Usuário validado: `{}`", user.getEmail());
 
