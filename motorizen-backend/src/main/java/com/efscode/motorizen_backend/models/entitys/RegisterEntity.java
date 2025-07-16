@@ -62,11 +62,10 @@ public class RegisterEntity implements EntityInterface<RegisterDTO> {
   private LocalDate registerDate;
 
   @CreationTimestamp
-  @Column(nullable = false, updatable = false)
+  @Column(updatable = false)
   private LocalDateTime createdAt;
 
   @UpdateTimestamp
-  @Column(nullable = false)
   private LocalDateTime updatedAt;
 
   @Column(nullable = true)

@@ -7,6 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import com.efscode.motorizen_backend.interfaces.EntityInterface;
 import com.efscode.motorizen_backend.models.dtos.FuelTypeDTO;
+import com.efscode.motorizen_backend.models.dtos.NewFuelType;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,26 +28,24 @@ import lombok.NoArgsConstructor;
 @Builder
 public class FuelTypeEntity implements EntityInterface<FuelTypeDTO> {
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
   @Column(nullable = false, unique = true, length = 20)
   private String name;
 
   @CreationTimestamp
-  @Column(nullable = false, updatable = false)
+  @Column(updatable = false)
   private LocalDateTime createdAt;
 
   @UpdateTimestamp
-  @Column(nullable = false)
   private LocalDateTime updatedAt;
 
   @Column(nullable = true)
   private LocalDateTime deletedAt;
 
-  public FuelTypeEntity(FuelTypeDTO fuelTypeDTO) {
-    this.id = fuelTypeDTO.id();
-    this.name = fuelTypeDTO.name();
+  public FuelTypeEntity(NewFuelType newFuelType) {
+    this.name = newFuelType.name();
   }
 
   @Override

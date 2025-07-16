@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BackLogEventTypeEntity {
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
   @Column(nullable = false, unique = true, length = 30)
@@ -35,10 +35,9 @@ public class BackLogEventTypeEntity {
   private BackLogSeverityEntity backLogSeverity;
 
   @CreationTimestamp
-  @Column(nullable = false, updatable = false)
+  @Column(updatable = false)
   private LocalDateTime createdAt;
 
   @UpdateTimestamp
-  @Column(nullable = false)
   private LocalDateTime updatedAt;
 }

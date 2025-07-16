@@ -66,11 +66,10 @@ public class UserEntity implements EntityInterface<UserDTO>, UserDetails {
   private Boolean isAdministrator = false;
 
   @CreationTimestamp
-  @Column(nullable = false, updatable = false)
+  @Column(updatable = false)
   private LocalDateTime createdAt;
 
   @UpdateTimestamp
-  @Column(nullable = false)
   private LocalDateTime updatedAt;
 
   @Column(nullable = true)

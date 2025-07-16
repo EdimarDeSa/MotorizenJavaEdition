@@ -7,6 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import com.efscode.motorizen_backend.interfaces.EntityInterface;
 import com.efscode.motorizen_backend.models.dtos.BrandDTO;
+import com.efscode.motorizen_backend.models.dtos.NewBrandDTO;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,26 +28,24 @@ import lombok.NoArgsConstructor;
 @Builder
 public class BrandEntity implements EntityInterface<BrandDTO> {
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
   @Column(nullable = false, unique = true, length = 50)
   private String name;
 
   @CreationTimestamp
-  @Column(nullable = false, updatable = false)
+  @Column(updatable = false)
   private LocalDateTime createdAt;
 
   @UpdateTimestamp
-  @Column(nullable = false)
   private LocalDateTime updatedAt;
 
   @Column(nullable = true)
   private LocalDateTime deletedAt;
 
-  public BrandEntity(BrandDTO brandDTO) {
-    this.id = brandDTO.id();
-    this.name = brandDTO.name();
+  public BrandEntity(NewBrandDTO newBrand) {
+    this.name = newBrand.name();
   }
 
   @Override

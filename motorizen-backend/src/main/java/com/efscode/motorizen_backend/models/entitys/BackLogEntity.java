@@ -22,7 +22,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @NoArgsConstructor
 public class BackLogEntity {
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @ManyToOne
@@ -37,6 +37,6 @@ public class BackLogEntity {
   private String description;
 
   @CreationTimestamp
-  @Column(nullable = false, updatable = false)
+  @Column(updatable = false)
   private LocalDateTime createdAt;
 }
