@@ -46,6 +46,7 @@ public class TokenAuthFilter extends OncePerRequestFilter {
       log.info("Usuário validado: `{}`", user.getEmail());
 
       var authorities = user.getAuthorities();
+      log.info("Autoridades do usuário: `{}`", authorities);
       var auth = new UsernamePasswordAuthenticationToken(user.toDTO(), null, authorities);
       SecurityContextHolder.getContext().setAuthentication(auth);
 
@@ -65,6 +66,7 @@ public class TokenAuthFilter extends OncePerRequestFilter {
     log.info("Iniciando filtro de autenticação para url `{}`", uri);
 
     List<String> uris = List.of("/auth/login",
+        "/auth/renew-token",
         "/user/new",
         "/swagger-ui",
         "/v3/api-docs",
@@ -82,17 +84,14 @@ public class TokenAuthFilter extends OncePerRequestFilter {
 
     String bearerToken = request.getHeader("Authorization");
 
-    if (bearerToken == null) {
+    if (bearerToken == null ||
+        bearerToken.isBlank() ||
+        !bearerToken.startsWith("Bearer ")) {
       throw new MotorizenException(MotoriZenResponseCodeEnum.TOKEN_INVALID);
     }
 
-    String[] splitedBearerToken = bearerToken.split("\\s");
+    return bearerToken.substring(7);
 
-    if (splitedBearerToken.length != 2) {
-      throw new MotorizenException(MotoriZenResponseCodeEnum.TOKEN_INVALID);
-    }
-
-    return splitedBearerToken[1];
   }
 
 }
