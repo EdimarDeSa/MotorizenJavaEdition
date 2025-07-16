@@ -152,4 +152,33 @@ public class AuthService {
         .orElseThrow(() -> new MotorizenException(MotoriZenResponseCodeEnum.USER_NOT_FOUND));
   }
 
+  public TokenDTO renewToken(String refreshToken) {
+    try {
+      JWTVerifier verifier = JWT.require(jwtRefreshSecretAlg)
+          .withIssuer(jwtIssuer)
+          .build();
+
+      DecodedJWT decodedJWT = verifier.verify(refreshToken);
+      String userId = decodedJWT.getSubject();
+
+      UserEntity user = selectUserById(UUID.fromString(userId));
+
+      Instant expirationTime = getExpirationTime(jwtExpiration);
+      String newToken = generateToken(user.toDTO(), expirationTime);
+
+      Instant newRefreshTokenExpirationTime = getExpirationTime(jwtRefreshExpiration);
+      String newRefreshToken = generateRefreshToken(userId, newRefreshTokenExpirationTime);
+
+      return new TokenDTO(
+          newToken,
+          newRefreshToken,
+          expirationTime.toString(),
+          newRefreshTokenExpirationTime.toString());
+
+    } catch (Exception e) {
+      log.error("Erro ao renovar o token: {}", e.getMessage());
+      throw new MotorizenException(MotoriZenResponseCodeEnum.INVALID_REFRESH_TOKEN);
+    }
+  }
+
 }
