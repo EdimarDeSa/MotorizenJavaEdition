@@ -7,8 +7,6 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO:create-drop}
-    # properties:
-      # hibernate.format_sql: true
   data:
     redis:
       host: ${REDIS_HOST:motorizen-redis}
@@ -26,13 +24,13 @@ spring:
       name: admin
       password: $2a$12$glDdI7XriCKPr/KfzQAb3.rH.FjFyxw9RwzIRPl1A4hA6vAKLTXme
       roles:
-      - administrator
-      - user
+        - administrator
+        - user
 
 logging:
   level:
     root: INFO
-    '[com.efscode.motorizen_backend]': INFO
+    "[com.efscode.motorizen_backend]": INFO
 
 app:
   info:
