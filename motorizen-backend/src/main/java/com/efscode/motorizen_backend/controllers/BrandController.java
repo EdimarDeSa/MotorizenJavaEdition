@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+
 @RestController
 @RequestMapping("/brand")
 @RequiredArgsConstructor
@@ -33,12 +34,24 @@ public class BrandController {
 
   @GetMapping("/all")
   public ResponseEntity<ApiResponseBody<List<BrandDTO>>> getAllBrands() {
+    log.debug("Iniciando getAllBrands");
     List<BrandDTO> brands = brandService.findAllBrands();
 
     ApiResponseBody<List<BrandDTO>> content = ApiResponseBody.ok(brands);
 
     return ResponseEntity.ok(content);
   }
+
+  @GetMapping("/search/{filter}")
+  public ResponseEntity<ApiResponseBody<List<BrandDTO>>> filterBrands(@PathVariable String filter) {
+    log.debug("Iniciando filterBrands para o filtro`{}`", filter);
+    List<BrandDTO> brands = brandService.filterBrands(filter);
+
+    ApiResponseBody<List<BrandDTO>> content = ApiResponseBody.ok(brands);
+
+    return ResponseEntity.ok(content);
+  }
+  
 
   @PostMapping("/new")
   @PreAuthorize("hasRole('ROLE_ADMIN')")

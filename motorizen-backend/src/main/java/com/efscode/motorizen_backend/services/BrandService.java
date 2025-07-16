@@ -30,6 +30,15 @@ public class BrandService {
         .toList();
   }
 
+  public List<BrandDTO> filterBrands(String filter) {
+    var brands = brandRepo.findByNameContainingIgnoreCase(filter);
+    if (brands.isEmpty())
+      throw new MotorizenException(MotoriZenResponseCodeEnum.BRAND_NOT_FOUND);
+    return brands.stream()
+        .map(BrandEntity::toDTO)
+        .toList();
+  }
+
   public void createNewBrand(NewBrandDTO newBrand) {
     try {
       validators.validateNewBrand(newBrand.toDTO());

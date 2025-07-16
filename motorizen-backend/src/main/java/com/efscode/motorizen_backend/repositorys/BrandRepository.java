@@ -13,6 +13,8 @@ public interface BrandRepository extends JpaRepository<BrandEntity, Integer> {
   @Query("SELECT b FROM BrandEntity b WHERE b.deletedAt IS NULL")
   List<BrandEntity> findAllAndNotDeleted();
 
+  List<BrandEntity> findByNameContainingIgnoreCase(String name);
+
   Boolean existsByName(String name);
 
   Boolean existsByNameAndIdNot(String name, Integer id);
