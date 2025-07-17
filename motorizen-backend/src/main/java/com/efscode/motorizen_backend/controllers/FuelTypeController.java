@@ -54,7 +54,7 @@ public class FuelTypeController {
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   public ResponseEntity<ApiResponseBody<Void>> createNewFuelType(@RequestBody NewFuelTypeDTO newFuelType) {
     log.debug("Iniciando createNewFuelType para o tipo de combustível`{}`", newFuelType.name());
-    fuelTypeService.createNewFuelType(newFuelType);
+    fuelTypeService.createFuelType(newFuelType);
 
     ApiResponseBody<Void> content = new ApiResponseBody<>(
         MotoriZenResponseCodeEnum.OK, null);

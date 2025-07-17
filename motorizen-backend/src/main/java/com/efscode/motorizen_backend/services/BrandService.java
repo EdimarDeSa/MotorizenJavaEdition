@@ -41,7 +41,7 @@ public class BrandService {
     return BrandMapper.INSTANCE.entitiesToDtos(brands);
   }
 
-  public void createNewBrand(NewBrandDTO newBrand) {
+  public void createBrand(NewBrandDTO newBrand) {
     try {
       validators.validateNewBrand(BrandMapper.INSTANCE.newDtoToDto(newBrand));
 

@@ -54,7 +54,7 @@ public class BrandController {
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   public ResponseEntity<ApiResponseBody<Void>> createNewBrand(@RequestBody NewBrandDTO newBrand) {
     log.debug("Iniciando createNewBrand para a marca`{}`", newBrand.name());
-    brandService.createNewBrand(newBrand);
+    brandService.createBrand(newBrand);
 
     ApiResponseBody<Void> content = ApiResponseBody.ok(null);
 

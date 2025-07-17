@@ -5,5 +5,8 @@ import lombok.Builder;
 @Builder
 public record FuelTypeDTO(
     Integer id,
-    String name) {
+    String name,
+    String createdAt,
+    String updatedAt,
+    String deletedAt) {
 }

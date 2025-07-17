@@ -28,22 +28,41 @@ public class Validators {
   private final RegisterRepository registerRepo;
   private final BackLogRepository backLogRepo;
 
-  public void validateNewBrand(BrandDTO brand) {
-    validateBrandData(brand);
+  public void validateNewBrand(BrandDTO dto) {
+    validateBrandData(dto);
 
-    if (brandRepo.existsByNameAndDeletedAtIsNull(brand.name()))
+    if (brandRepo.existsByNameAndDeletedAtIsNull(dto.name()))
       throw new MotorizenException(MotoriZenResponseCodeEnum.BRAND_ALREADY_EXISTS);
   }
 
-  public void validateBrandUpdates(BrandDTO brand, Integer id) {
-    validateBrandData(brand);
+  public void validateBrandUpdates(BrandDTO dto, Integer id) {
+    validateBrandData(dto);
 
-    if (brandRepo.existsByNameAndIdNot(brand.name(), id))
+    if (brandRepo.existsByNameAndIdNot(dto.name(), id))
       throw new MotorizenException(MotoriZenResponseCodeEnum.BRAND_ALREADY_EXISTS);
   }
 
-  private void validateBrandData(BrandDTO brand) {
-    validateLength(brand.name(), 2, 50, MotoriZenResponseCodeEnum.INVALID_BRAND_NAME);
+  private void validateBrandData(BrandDTO dto) {
+    validateLength(dto.name(), 2, 50, MotoriZenResponseCodeEnum.INVALID_BRAND_NAME);
+  }
+
+  public void validateNewFuelType(FuelTypeDTO dto) {
+    validateFuelTypeData(dto);
+
+    if (fuelTypeRepo.existsByNameAndDeletedAtIsNull(dto.name())) {
+      throw new MotorizenException(MotoriZenResponseCodeEnum.FUEL_TYPE_ALREADY_EXISTS);
+    }
+  }
+
+  public void validateFuelTypeUpdates(FuelTypeDTO dto, Integer id) {
+    validateFuelTypeData(dto);
+
+    if (fuelTypeRepo.existsByNameAndIdNot(dto.name(), id))
+      throw new MotorizenException(MotoriZenResponseCodeEnum.FUEL_TYPE_ALREADY_EXISTS);
+  }
+
+  private void validateFuelTypeData(FuelTypeDTO dto) {
+    validateLength(dto.name(), 2, 20, MotoriZenResponseCodeEnum.INVALID_FUEL_TYPE_NAME);
   }
 
   public void validateUser(UserDTO user) {
@@ -75,18 +94,6 @@ public class Validators {
   private void validateLength(String toValidate, int minLength, int maxLength, MotoriZenResponseCodeEnum rc) {
     if (toValidate.length() < minLength || toValidate.length() > maxLength) {
       throw new MotorizenException(rc);
-    }
-  }
-
-  public void validateFuelType(FuelTypeDTO dto) {
-    validateLength(dto.name(), 2, 20, MotoriZenResponseCodeEnum.INVALID_FUEL_TYPE_NAME);
-  }
-
-  public void validateNewFuelType(NewFuelTypeDTO dto) {
-    validateFuelType(dto.toDTO());
-
-    if (fuelTypeRepo.existsByName(dto.name())) {
-      throw new MotorizenException(MotoriZenResponseCodeEnum.FUEL_TYPE_ALREADY_EXISTS);
     }
   }
 }

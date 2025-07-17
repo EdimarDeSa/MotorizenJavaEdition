@@ -11,13 +11,15 @@ import com.efscode.motorizen_backend.models.fuel_type.FuelTypeEntity;
 public interface FuelTypeRepository extends JpaRepository<FuelTypeEntity, Integer> {
   FuelTypeEntity findByIdAndDeletedAtIsNull(Integer id);
 
+  FuelTypeEntity findByName(String name);
+
   List<FuelTypeEntity> findByDeletedAtIsNull();
 
   List<FuelTypeEntity> findByNameContainingIgnoreCaseAndDeletedAtIsNull(String name);
 
-  Boolean existsByName(String name);
+  Boolean existsByNameAndDeletedAtIsNull(String name);
+
+  Boolean existsByNameAndDeletedAtIsNotNull(String name);
 
   Boolean existsByNameAndIdNot(String name, Integer id);
-
-  Integer findIdByName(String name);
 }

@@ -69,7 +69,7 @@ public class DataLoader implements CommandLineRunner {
       List<String> fuelTypes = mapper.readValue(inputStream, typeReference);
       fuelTypes.forEach(fuelType -> {
         NewFuelTypeDTO newFuelType = new NewFuelTypeDTO(fuelType);
-        fuelTypeService.createNewFuelType(newFuelType);
+        fuelTypeService.createFuelType(newFuelType);
       });
       log.info("Tipos de combustível carregados com sucesso!");
     } catch (Exception e) {
@@ -92,7 +92,7 @@ public class DataLoader implements CommandLineRunner {
       List<String> brands = mapper.readValue(inputStream, typeReference);
       brands.forEach(brand -> {
         NewBrandDTO newBrand = new NewBrandDTO(brand);
-        brandService.createNewBrand(newBrand);
+        brandService.createBrand(newBrand);
       });
       log.info("Marcas carregadas com sucesso!");
     } catch (Exception e) {
