@@ -59,6 +59,9 @@ public class BrandService {
 
     BrandEntity brand = brandRepo.findByIdAndDeletedAtIsNull(id);
 
+    if (brand == null)
+      throw new MotorizenException(MotoriZenResponseCodeEnum.BRAND_NOT_FOUND);
+
     BrandMapper.INSTANCE.updateEntityFromDto(brandUpdates, brand);
 
     brandRepo.save(brand);
