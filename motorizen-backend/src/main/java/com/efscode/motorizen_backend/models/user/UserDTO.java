@@ -15,7 +15,10 @@ public record UserDTO(
     String email,
     LocalDate birthdate,
     Boolean isActive,
-    Boolean isAdministrator) {
+    Boolean isAdministrator,
+    String createdAt,
+    String updatedAt,
+    String deletedAt) {
 
   public String getFullName() {
     return firstName + " " + lastName;

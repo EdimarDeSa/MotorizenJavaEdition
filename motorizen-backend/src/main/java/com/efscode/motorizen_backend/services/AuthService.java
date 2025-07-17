@@ -19,6 +19,7 @@ import com.efscode.motorizen_backend.models.auth.LoginDTO;
 import com.efscode.motorizen_backend.models.auth.TokenDTO;
 import com.efscode.motorizen_backend.models.user.UserDTO;
 import com.efscode.motorizen_backend.models.user.UserEntity;
+import com.efscode.motorizen_backend.models.user.UserMapper;
 import com.efscode.motorizen_backend.repositorys.UserRepository;
 
 import jakarta.annotation.PostConstruct;
@@ -29,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class AuthService {
-
+  private final UserMapper userMapper;
   private final UserRepository userRepo;
   private final PasswordEncoder passwordEncoder;
 
@@ -67,7 +68,7 @@ public class AuthService {
     }
 
     Instant expirationTime = getExpirationTime(jwtExpiration);
-    String token = generateToken(user.toDTO(), expirationTime);
+    String token = generateToken(userMapper.entityToDto(user), expirationTime);
 
     Instant refreshTokenExpirationTime = getExpirationTime(jwtRefreshExpiration);
     String refreshToken = generateRefreshToken(user.getId().toString(), refreshTokenExpirationTime);
@@ -168,7 +169,7 @@ public class AuthService {
       UserEntity user = selectUserByIdAndDeletedAtIsNull(UUID.fromString(userId));
 
       Instant expirationTime = getExpirationTime(jwtExpiration);
-      String newToken = generateToken(user.toDTO(), expirationTime);
+      String newToken = generateToken(userMapper.entityToDto(user), expirationTime);
 
       Instant newRefreshTokenExpirationTime = getExpirationTime(jwtRefreshExpiration);
       String newRefreshToken = generateRefreshToken(userId, newRefreshTokenExpirationTime);

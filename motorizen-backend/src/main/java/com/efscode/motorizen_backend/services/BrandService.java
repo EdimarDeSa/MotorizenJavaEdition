@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 public class BrandService {
   private final BrandRepository brandRepo;
   private final Validators validators;
+  private final BrandMapper brandMapper;
 
   public List<BrandDTO> findAllBrands() {
     List<BrandEntity> brands = brandRepo.findByDeletedAtIsNull();
@@ -29,7 +30,7 @@ public class BrandService {
     if (brands.isEmpty())
       throw new MotorizenException(MotoriZenResponseCodeEnum.BRAND_NOT_FOUND);
 
-    return BrandMapper.INSTANCE.entitiesToDtos(brands);
+    return brandMapper.entitiesToDtos(brands);
   }
 
   public List<BrandDTO> filterBrands(String filter) {
@@ -38,12 +39,12 @@ public class BrandService {
     if (brands.isEmpty())
       throw new MotorizenException(MotoriZenResponseCodeEnum.BRAND_NOT_FOUND);
 
-    return BrandMapper.INSTANCE.entitiesToDtos(brands);
+    return brandMapper.entitiesToDtos(brands);
   }
 
   public void createBrand(NewBrandDTO newBrand) {
     try {
-      validators.validateNewBrand(BrandMapper.INSTANCE.newDtoToDto(newBrand));
+      validators.validateNewBrand(brandMapper.newDtoToDto(newBrand));
 
       BrandEntity brand = createNewOrReactivateBrand(newBrand);
 
@@ -55,18 +56,18 @@ public class BrandService {
   }
 
   public BrandDTO updateBrand(Integer id, BrandUpdatesDTO brandUpdates) {
-    validators.validateBrandUpdates(BrandMapper.INSTANCE.updatesDtoToDto(brandUpdates), id);
+    validators.validateBrandUpdates(brandMapper.updatesDtoToDto(brandUpdates), id);
 
     BrandEntity brand = brandRepo.findByIdAndDeletedAtIsNull(id);
 
     if (brand == null)
       throw new MotorizenException(MotoriZenResponseCodeEnum.BRAND_NOT_FOUND);
 
-    BrandMapper.INSTANCE.updateEntityFromDto(brandUpdates, brand);
+    brandMapper.updateEntityFromDto(brandUpdates, brand);
 
     brandRepo.save(brand);
 
-    return BrandMapper.INSTANCE.entityToDto(brand);
+    return brandMapper.entityToDto(brand);
   }
 
   public void deleteBrand(Integer id) {
@@ -89,7 +90,7 @@ public class BrandService {
       brand.setDeletedAt(null);
 
     } else {
-      brand = BrandMapper.INSTANCE.newDtoToEntity(newBrand);
+      brand = brandMapper.newDtoToEntity(newBrand);
     }
 
     return brand;

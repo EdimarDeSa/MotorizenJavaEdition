@@ -15,6 +15,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.efscode.motorizen_backend.enums.MotoriZenResponseCodeEnum;
 import com.efscode.motorizen_backend.errors.MotorizenException;
 import com.efscode.motorizen_backend.models.user.UserEntity;
+import com.efscode.motorizen_backend.models.user.UserMapper;
 import com.efscode.motorizen_backend.services.AuthService;
 
 import jakarta.servlet.FilterChain;
@@ -28,6 +29,9 @@ import lombok.extern.slf4j.Slf4j;
 public class TokenAuthFilter extends OncePerRequestFilter {
   @Autowired
   private AuthService authService;
+
+  @Autowired
+  private UserMapper userMapper;
 
   @Override
   protected void doFilterInternal(@NonNull HttpServletRequest request,
@@ -47,7 +51,7 @@ public class TokenAuthFilter extends OncePerRequestFilter {
 
       var authorities = user.getAuthorities();
       log.info("Autoridades do usuário: `{}`", authorities);
-      var auth = new UsernamePasswordAuthenticationToken(user.toDTO(), null, authorities);
+      var auth = new UsernamePasswordAuthenticationToken(userMapper.entityToDto(user), null, authorities);
       SecurityContextHolder.getContext().setAuthentication(auth);
 
       filterChain.doFilter(request, response);

@@ -7,6 +7,7 @@ import com.efscode.motorizen_backend.enums.MotoriZenResponseCodeEnum;
 import com.efscode.motorizen_backend.errors.MotorizenException;
 import com.efscode.motorizen_backend.models.user.NewUser;
 import com.efscode.motorizen_backend.models.user.UserEntity;
+import com.efscode.motorizen_backend.models.user.UserMapper;
 import com.efscode.motorizen_backend.repositorys.UserRepository;
 import com.efscode.motorizen_backend.utils.Validators;
 
@@ -20,13 +21,14 @@ public class UserService {
   private final UserRepository userRepo;
   private final Validators validators;
   private final PasswordEncoder passwordEncoder;
+  private final UserMapper userMapper;
 
   public void createNewUser(NewUser newUser) {
     try {
       validators.validateNewUser(newUser);
-      String passwordHash = passwordEncoder.encode(newUser.getPassword());
+      String passwordHash = passwordEncoder.encode(newUser.password());
 
-      UserEntity user = new UserEntity(newUser, passwordHash);
+      UserEntity user = userMapper.newDtoToEntity(newUser, passwordHash);
 
       userRepo.save(user);
     } catch (IllegalArgumentException e) {

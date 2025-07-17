@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class FuelTypeService {
   private final FuelTypeRepository fuelTypeRepo;
   private final Validators validators;
+  private final FuelTypeMapper fuelTypeMapper;
 
   public List<FuelTypeDTO> findAllFuelTypes() {
     List<FuelTypeEntity> fuelTypes = fuelTypeRepo.findAll();
@@ -28,7 +29,7 @@ public class FuelTypeService {
     if (fuelTypes.isEmpty())
       throw new MotorizenException(MotoriZenResponseCodeEnum.FUEL_TYPE_NOT_FOUND);
 
-    return FuelTypeMapper.INSTANCE.entitiesToDtos(fuelTypes);
+    return fuelTypeMapper.entitiesToDtos(fuelTypes);
   }
 
   public List<FuelTypeDTO> filterFuelTypes(String filter) {
@@ -37,13 +38,13 @@ public class FuelTypeService {
     if (fuelTypes.isEmpty())
       throw new MotorizenException(MotoriZenResponseCodeEnum.FUEL_TYPE_NOT_FOUND);
 
-    return FuelTypeMapper.INSTANCE.entitiesToDtos(fuelTypes);
+    return fuelTypeMapper.entitiesToDtos(fuelTypes);
 
   }
 
   public void createFuelType(NewFuelTypeDTO newFuelType) {
     try {
-      validators.validateNewFuelType(FuelTypeMapper.INSTANCE.newDtoToDto(newFuelType));
+      validators.validateNewFuelType(fuelTypeMapper.newDtoToDto(newFuelType));
 
       FuelTypeEntity fuelType = createNewOrReactivateFuelType(newFuelType);
 
@@ -56,18 +57,18 @@ public class FuelTypeService {
 
   public FuelTypeDTO updateFuelType(Integer id, FuelTypeUpdatesDTO fuelTypeUpdates) {
     validators.validateFuelTypeUpdates(
-        FuelTypeMapper.INSTANCE.updatesDtoToDto(fuelTypeUpdates), id);
+        fuelTypeMapper.updatesDtoToDto(fuelTypeUpdates), id);
 
     FuelTypeEntity fuelType = fuelTypeRepo.findByIdAndDeletedAtIsNull(id);
 
     if (fuelType == null)
       throw new MotorizenException(MotoriZenResponseCodeEnum.FUEL_TYPE_ALREADY_EXISTS);
 
-    FuelTypeMapper.INSTANCE.updateEntityFromDto(fuelTypeUpdates, fuelType);
+    fuelTypeMapper.updateEntityFromDto(fuelTypeUpdates, fuelType);
 
     fuelTypeRepo.save(fuelType);
 
-    return FuelTypeMapper.INSTANCE.entityToDto(fuelType);
+    return fuelTypeMapper.entityToDto(fuelType);
   }
 
   public void deleteFuelType(Integer id) {
@@ -90,7 +91,7 @@ public class FuelTypeService {
       fuelType.setDeletedAt(null);
 
     } else {
-      fuelType = FuelTypeMapper.INSTANCE.newDtoToEntity(newFuelType);
+      fuelType = fuelTypeMapper.newDtoToEntity(newFuelType);
     }
 
     return fuelType;
