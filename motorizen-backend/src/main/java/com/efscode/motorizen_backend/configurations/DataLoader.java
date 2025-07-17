@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.efscode.motorizen_backend.models.brand.NewBrandDTO;
 import com.efscode.motorizen_backend.models.fuel_type.NewFuelTypeDTO;
-import com.efscode.motorizen_backend.models.user.NewUser;
+import com.efscode.motorizen_backend.models.user.NewUserDTO;
 import com.efscode.motorizen_backend.models.user.UserEntity;
 import com.efscode.motorizen_backend.repositorys.BrandRepository;
 import com.efscode.motorizen_backend.repositorys.FuelTypeRepository;
@@ -106,14 +106,14 @@ public class DataLoader implements CommandLineRunner {
 
     log.info("Iniciando usuários...");
 
-    List<NewUser> users = List.of(
-        new NewUser(
+    List<NewUserDTO> users = List.of(
+        new NewUserDTO(
             "Usuario",
             "de Teste",
             "user@user.com",
             "P4s5W0rD@",
             LocalDate.parse("2000-04-04")),
-        new NewUser(
+        new NewUserDTO(
             "Admin",
             "de Teste",
             "admin@admin.com",
@@ -121,10 +121,10 @@ public class DataLoader implements CommandLineRunner {
             LocalDate.parse("2000-04-04")));
 
     users.forEach(user -> {
-      log.info("Adicionando usuário {}", user.getFirstName());
+      log.info("Adicionando usuário {}", user.firstName());
       userService.createNewUser(user);
-      if ("admin".equals(user.getFirstName())) {
-        UserEntity u = userRepo.findByEmail(user.getEmail());
+      if ("admin".equals(user.firstName())) {
+        UserEntity u = userRepo.findByEmail(user.email());
         u.setIsAdministrator(true);
         userRepo.save(u);
       }

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.efscode.motorizen_backend.enums.MotoriZenResponseCodeEnum;
 import com.efscode.motorizen_backend.errors.MotorizenException;
-import com.efscode.motorizen_backend.models.user.NewUser;
+import com.efscode.motorizen_backend.models.user.NewUserDTO;
 import com.efscode.motorizen_backend.models.user.UserEntity;
 import com.efscode.motorizen_backend.models.user.UserMapper;
 import com.efscode.motorizen_backend.repositorys.UserRepository;
@@ -23,11 +23,11 @@ public class UserService {
   private final PasswordEncoder passwordEncoder;
   private final UserMapper userMapper;
 
-  public void createNewUser(NewUser newUser) {
+  public void createNewUser(NewUserDTO newUser) {
     try {
-      validators.validateNewUser(newUser);
-      String passwordHash = passwordEncoder.encode(newUser.password());
+      validators.validateNewUser(userMapper.newDtoToDto(newUser), newUser.password());
 
+      String passwordHash = passwordEncoder.encode(newUser.password());
       UserEntity user = userMapper.newDtoToEntity(newUser, passwordHash);
 
       userRepo.save(user);

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.efscode.motorizen_backend.enums.MotoriZenResponseCodeEnum;
 import com.efscode.motorizen_backend.models.ApiResponseBody;
-import com.efscode.motorizen_backend.models.user.NewUser;
+import com.efscode.motorizen_backend.models.user.NewUserDTO;
 import com.efscode.motorizen_backend.models.user.UserDTO;
 import com.efscode.motorizen_backend.services.UserService;
 
@@ -41,8 +41,8 @@ public class UserController {
   }
 
   @PostMapping("/new")
-  public ResponseEntity<ApiResponseBody<Void>> createNewUser(@RequestBody NewUser newUser) {
-    log.debug("Iniciando createNewUser para o usuário`{}`", newUser.getEmail());
+  public ResponseEntity<ApiResponseBody<Void>> createNewUser(@RequestBody NewUserDTO newUser) {
+    log.debug("Iniciando createNewUser para o usuário`{}`", newUser.email());
     userService.createNewUser(newUser);
 
     ApiResponseBody<Void> content = new ApiResponseBody<>(

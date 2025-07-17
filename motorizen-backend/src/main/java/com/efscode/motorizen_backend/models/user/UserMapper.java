@@ -9,11 +9,6 @@ import org.mapstruct.Named;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-  @Mapping(target = "createdAt", dateFormat = "dd-MM-yyyy HH:mm:ss")
-  @Mapping(target = "updatedAt", dateFormat = "dd-MM-yyyy HH:mm:ss")
-  @Mapping(target = "deletedAt", dateFormat = "dd-MM-yyyy HH:mm:ss")
-  UserDTO entityToDto(UserEntity entity);
-
   @Mapping(target = "firstName", source = "dto.firstName", qualifiedByName = "capitalizeName")
   @Mapping(target = "lastName", source = "dto.lastName", qualifiedByName = "capitalizeName")
   @Mapping(target = "email", expression = "java(dto.email().toLowerCase())")
@@ -25,7 +20,20 @@ public interface UserMapper {
   @Mapping(target = "createdAt", ignore = true)
   @Mapping(target = "updatedAt", ignore = true)
   @Mapping(target = "deletedAt", ignore = true)
-  UserEntity newDtoToEntity(NewUser dto, String passwordHash);
+  UserEntity newDtoToEntity(NewUserDTO dto, String passwordHash);
+
+  @Mapping(target = "createdAt", dateFormat = "dd-MM-yyyy HH:mm:ss")
+  @Mapping(target = "updatedAt", dateFormat = "dd-MM-yyyy HH:mm:ss")
+  @Mapping(target = "deletedAt", dateFormat = "dd-MM-yyyy HH:mm:ss")
+  UserDTO entityToDto(UserEntity entity);
+
+  @Mapping(target = "id", ignore = true)
+  @Mapping(target = "isActive", constant = "true")
+  @Mapping(target = "isAdministrator", constant = "false")
+  @Mapping(target = "createdAt", ignore = true)
+  @Mapping(target = "updatedAt", ignore = true)
+  @Mapping(target = "deletedAt", ignore = true)
+  UserDTO newDtoToDto(NewUserDTO newDTO);
 
   @Named("capitalizeName")
   default String capitalizeName(String name) {

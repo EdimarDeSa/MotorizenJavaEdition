@@ -6,7 +6,6 @@ import com.efscode.motorizen_backend.enums.MotoriZenResponseCodeEnum;
 import com.efscode.motorizen_backend.errors.MotorizenException;
 import com.efscode.motorizen_backend.models.brand.BrandDTO;
 import com.efscode.motorizen_backend.models.fuel_type.FuelTypeDTO;
-import com.efscode.motorizen_backend.models.user.NewUser;
 import com.efscode.motorizen_backend.models.user.UserDTO;
 import com.efscode.motorizen_backend.repositorys.BackLogRepository;
 import com.efscode.motorizen_backend.repositorys.BrandRepository;
@@ -78,13 +77,13 @@ public class Validators {
     }
   }
 
-  public void validateNewUser(UserDTO newUser) {
-    this.validateUser(newUser.toUserDTO());
-    if (userRepo.existsByEmail(newUser.getEmail().toLowerCase())) {
+  public void validateNewUser(UserDTO dto, String password) {
+    this.validateUser(dto);
+    if (userRepo.existsByEmail(dto.email().toLowerCase())) {
       throw new MotorizenException(MotoriZenResponseCodeEnum.USER_ALREADY_EXISTS);
     }
 
-    if (!newUser.getPassword().matches(
+    if (!password.matches(
         "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$")) {
       throw new MotorizenException(MotoriZenResponseCodeEnum.INVALID_PASSWORD);
     }
