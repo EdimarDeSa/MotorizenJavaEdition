@@ -1,4 +1,4 @@
-package com.efscode.motorizen_backend.models.dtos;
+package com.efscode.motorizen_backend.models;
 
 import com.efscode.motorizen_backend.enums.MotoriZenResponseCodeEnum;
 

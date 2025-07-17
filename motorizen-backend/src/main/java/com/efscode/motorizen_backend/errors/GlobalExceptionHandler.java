@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.efscode.motorizen_backend.enums.MotoriZenResponseCodeEnum;
-import com.efscode.motorizen_backend.models.dtos.ApiResponseBody;
+import com.efscode.motorizen_backend.models.ApiResponseBody;
 
 import lombok.extern.slf4j.Slf4j;
 

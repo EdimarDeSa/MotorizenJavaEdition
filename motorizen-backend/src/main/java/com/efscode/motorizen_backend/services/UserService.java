@@ -3,12 +3,12 @@ package com.efscode.motorizen_backend.services;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.efscode.motorizen_backend.Utils.Validators;
 import com.efscode.motorizen_backend.enums.MotoriZenResponseCodeEnum;
 import com.efscode.motorizen_backend.errors.MotorizenException;
 import com.efscode.motorizen_backend.models.user.NewUser;
 import com.efscode.motorizen_backend.models.user.UserEntity;
 import com.efscode.motorizen_backend.repositorys.UserRepository;
+import com.efscode.motorizen_backend.utils.Validators;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.efscode.motorizen_backend.enums.MotoriZenResponseCodeEnum;
-import com.efscode.motorizen_backend.models.dtos.ApiResponseBody;
+import com.efscode.motorizen_backend.models.ApiResponseBody;
 import com.efscode.motorizen_backend.models.fuel_type.FuelTypeDTO;
 import com.efscode.motorizen_backend.models.fuel_type.FuelTypeUpdatesDTO;
 import com.efscode.motorizen_backend.models.fuel_type.NewFuelTypeDTO;

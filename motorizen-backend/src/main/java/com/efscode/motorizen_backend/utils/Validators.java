@@ -1,4 +1,4 @@
-package com.efscode.motorizen_backend.Utils;
+package com.efscode.motorizen_backend.utils;
 
 import org.springframework.stereotype.Component;
 
