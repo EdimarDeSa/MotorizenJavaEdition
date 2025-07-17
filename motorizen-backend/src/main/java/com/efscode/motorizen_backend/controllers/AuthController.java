@@ -3,9 +3,9 @@ package com.efscode.motorizen_backend.controllers;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.efscode.motorizen_backend.models.auth.LoginDTO;
+import com.efscode.motorizen_backend.models.auth.TokenDTO;
 import com.efscode.motorizen_backend.models.dtos.ApiResponseBody;
-import com.efscode.motorizen_backend.models.dtos.LoginDTO;
-import com.efscode.motorizen_backend.models.dtos.TokenDTO;
 import com.efscode.motorizen_backend.services.AuthService;
 
 import jakarta.validation.Valid;

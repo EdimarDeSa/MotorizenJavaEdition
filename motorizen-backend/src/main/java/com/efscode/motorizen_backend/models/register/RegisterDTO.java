@@ -1,9 +1,12 @@
-package com.efscode.motorizen_backend.models.dtos;
+package com.efscode.motorizen_backend.models.register;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.UUID;
+
+import com.efscode.motorizen_backend.models.user.UserDTO;
+import com.efscode.motorizen_backend.models.vehicle.VehicleDTO;
 
 import lombok.Builder;
 

@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.efscode.motorizen_backend.models.brand.BrandDTO;
+import com.efscode.motorizen_backend.models.brand.BrandUpdatesDTO;
+import com.efscode.motorizen_backend.models.brand.NewBrandDTO;
 import com.efscode.motorizen_backend.models.dtos.ApiResponseBody;
-import com.efscode.motorizen_backend.models.dtos.brand.BrandDTO;
-import com.efscode.motorizen_backend.models.dtos.brand.BrandUpdatesDTO;
-import com.efscode.motorizen_backend.models.dtos.brand.NewBrandDTO;
 import com.efscode.motorizen_backend.services.BrandService;
 
 import lombok.RequiredArgsConstructor;

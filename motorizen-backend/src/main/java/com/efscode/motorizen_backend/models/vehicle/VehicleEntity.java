@@ -1,4 +1,4 @@
-package com.efscode.motorizen_backend.models.entitys;
+package com.efscode.motorizen_backend.models.vehicle;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -7,8 +7,9 @@ import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.efscode.motorizen_backend.interfaces.EntityInterface;
-import com.efscode.motorizen_backend.models.dtos.VehicleDTO;
+import com.efscode.motorizen_backend.models.brand.BrandEntity;
+import com.efscode.motorizen_backend.models.fuel_type.FuelTypeEntity;
+import com.efscode.motorizen_backend.models.user.UserEntity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -30,7 +31,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class VehicleEntity implements EntityInterface<VehicleDTO> {
+public class VehicleEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
@@ -81,37 +82,4 @@ public class VehicleEntity implements EntityInterface<VehicleDTO> {
 
   @Column(nullable = true)
   private LocalDateTime deletedAt;
-
-  public VehicleEntity(VehicleDTO vehicleDTO, UserEntity user, BrandEntity brand, FuelTypeEntity vehicle) {
-    this.id = vehicleDTO.id();
-    this.user = user;
-    this.brand = brand;
-    this.fuelType = vehicle;
-    this.model = vehicleDTO.model();
-    this.year = vehicleDTO.year();
-    this.renavam = vehicleDTO.renavam();
-    this.color = vehicleDTO.color();
-    this.licensePlate = vehicleDTO.licensePlate();
-    this.fuelCapacity = vehicleDTO.fuelCapacity();
-    this.odometer = vehicleDTO.odometer();
-    this.isActive = vehicleDTO.isActive();
-  }
-
-  @Override
-  public VehicleDTO toDTO() {
-    return VehicleDTO.builder()
-        .id(id)
-        .user(user.toDTO())
-        .brand(brand.toDTO())
-        .fuelType(fuelType.toDTO())
-        .model(model)
-        .renavam(renavam)
-        .color(color)
-        .year(year)
-        .licensePlate(licensePlate)
-        .fuelCapacity(fuelCapacity)
-        .odometer(odometer)
-        .isActive(isActive)
-        .build();
-  }
 }

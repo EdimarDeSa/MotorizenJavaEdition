@@ -1,10 +1,16 @@
-package com.efscode.motorizen_backend.models.entitys;
+package com.efscode.motorizen_backend.models.register;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.UUID;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import com.efscode.motorizen_backend.models.user.UserEntity;
+import com.efscode.motorizen_backend.models.vehicle.VehicleEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,11 +24,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import com.efscode.motorizen_backend.interfaces.EntityInterface;
-import com.efscode.motorizen_backend.models.dtos.RegisterDTO;
 
 @Entity
 @Table(name = "register")
@@ -30,7 +31,7 @@ import com.efscode.motorizen_backend.models.dtos.RegisterDTO;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RegisterEntity implements EntityInterface<RegisterDTO> {
+public class RegisterEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
@@ -81,20 +82,5 @@ public class RegisterEntity implements EntityInterface<RegisterDTO> {
     this.value = registryDTO.value();
     this.workTime = registryDTO.workTime();
     this.registerDate = registryDTO.registerDate();
-  }
-
-  @Override
-  public RegisterDTO toDTO() {
-    return RegisterDTO.builder()
-        .id(id)
-        .user(user.toDTO())
-        .vehicle(vehicle.toDTO())
-        .numberOfTrips(numberOfTrips)
-        .distance(distance)
-        .meanConsuption(meanConsuption)
-        .value(value)
-        .workTime(workTime)
-        .registerDate(registerDate)
-        .build();
   }
 }

@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.efscode.motorizen_backend.models.entitys.BrandEntity;
+import com.efscode.motorizen_backend.models.brand.BrandEntity;
 
 @Repository
 public interface BrandRepository extends JpaRepository<BrandEntity, Integer> {

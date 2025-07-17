@@ -1,4 +1,4 @@
-package com.efscode.motorizen_backend.models.dtos.brand;
+package com.efscode.motorizen_backend.models.brand;
 
 import lombok.Builder;
 

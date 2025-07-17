@@ -1,4 +1,4 @@
-package com.efscode.motorizen_backend.models.dtos.brand;
+package com.efscode.motorizen_backend.models.brand;
 
 import java.util.List;
 
@@ -6,8 +6,6 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
-
-import com.efscode.motorizen_backend.models.entitys.BrandEntity;
 
 @Mapper(componentModel = "spring")
 public interface BrandMapper {

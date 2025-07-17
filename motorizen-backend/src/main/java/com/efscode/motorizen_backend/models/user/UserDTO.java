@@ -1,4 +1,4 @@
-package com.efscode.motorizen_backend.models.dtos;
+package com.efscode.motorizen_backend.models.user;
 
 import java.time.LocalDate;
 import java.util.UUID;

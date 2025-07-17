@@ -1,25 +1,23 @@
 package com.efscode.motorizen_backend.controllers;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.efscode.motorizen_backend.enums.MotoriZenResponseCodeEnum;
 import com.efscode.motorizen_backend.models.dtos.ApiResponseBody;
-import com.efscode.motorizen_backend.models.dtos.NewUser;
-import com.efscode.motorizen_backend.models.dtos.UserDTO;
+import com.efscode.motorizen_backend.models.user.NewUser;
+import com.efscode.motorizen_backend.models.user.UserDTO;
 import com.efscode.motorizen_backend.services.UserService;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/user")

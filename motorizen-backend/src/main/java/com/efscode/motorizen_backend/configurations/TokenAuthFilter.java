@@ -14,7 +14,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.efscode.motorizen_backend.enums.MotoriZenResponseCodeEnum;
 import com.efscode.motorizen_backend.errors.MotorizenException;
-import com.efscode.motorizen_backend.models.entitys.UserEntity;
+import com.efscode.motorizen_backend.models.user.UserEntity;
 import com.efscode.motorizen_backend.services.AuthService;
 
 import jakarta.servlet.FilterChain;

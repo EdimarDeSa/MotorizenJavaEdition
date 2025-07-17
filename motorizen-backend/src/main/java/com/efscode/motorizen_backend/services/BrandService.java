@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 import com.efscode.motorizen_backend.Utils.Validators;
 import com.efscode.motorizen_backend.enums.MotoriZenResponseCodeEnum;
 import com.efscode.motorizen_backend.errors.MotorizenException;
-import com.efscode.motorizen_backend.models.dtos.brand.BrandDTO;
-import com.efscode.motorizen_backend.models.dtos.brand.BrandMapper;
-import com.efscode.motorizen_backend.models.dtos.brand.BrandUpdatesDTO;
-import com.efscode.motorizen_backend.models.dtos.brand.NewBrandDTO;
-import com.efscode.motorizen_backend.models.entitys.BrandEntity;
+import com.efscode.motorizen_backend.models.brand.BrandDTO;
+import com.efscode.motorizen_backend.models.brand.BrandEntity;
+import com.efscode.motorizen_backend.models.brand.BrandMapper;
+import com.efscode.motorizen_backend.models.brand.BrandUpdatesDTO;
+import com.efscode.motorizen_backend.models.brand.NewBrandDTO;
 import com.efscode.motorizen_backend.repositorys.BrandRepository;
 
 import lombok.RequiredArgsConstructor;

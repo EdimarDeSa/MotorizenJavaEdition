@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import com.efscode.motorizen_backend.models.dtos.NewBrandDTO;
-import com.efscode.motorizen_backend.models.dtos.NewFuelType;
-import com.efscode.motorizen_backend.models.dtos.NewUser;
-import com.efscode.motorizen_backend.models.entitys.UserEntity;
+import com.efscode.motorizen_backend.models.brand.NewBrandDTO;
+import com.efscode.motorizen_backend.models.fuel_type.NewFuelTypeDTO;
+import com.efscode.motorizen_backend.models.user.NewUser;
+import com.efscode.motorizen_backend.models.user.UserEntity;
 import com.efscode.motorizen_backend.repositorys.BrandRepository;
 import com.efscode.motorizen_backend.repositorys.FuelTypeRepository;
 import com.efscode.motorizen_backend.repositorys.UserRepository;
@@ -68,7 +68,7 @@ public class DataLoader implements CommandLineRunner {
     try {
       List<String> fuelTypes = mapper.readValue(inputStream, typeReference);
       fuelTypes.forEach(fuelType -> {
-        NewFuelType newFuelType = new NewFuelType(fuelType);
+        NewFuelTypeDTO newFuelType = new NewFuelTypeDTO(fuelType);
         fuelTypeService.createNewFuelType(newFuelType);
       });
       log.info("Tipos de combustível carregados com sucesso!");

@@ -4,11 +4,11 @@ import org.springframework.stereotype.Component;
 
 import com.efscode.motorizen_backend.enums.MotoriZenResponseCodeEnum;
 import com.efscode.motorizen_backend.errors.MotorizenException;
-import com.efscode.motorizen_backend.models.dtos.FuelTypeDTO;
-import com.efscode.motorizen_backend.models.dtos.NewFuelTypeDTO;
-import com.efscode.motorizen_backend.models.dtos.NewUser;
-import com.efscode.motorizen_backend.models.dtos.UserDTO;
-import com.efscode.motorizen_backend.models.dtos.brand.BrandDTO;
+import com.efscode.motorizen_backend.models.brand.BrandDTO;
+import com.efscode.motorizen_backend.models.fuel_type.FuelTypeDTO;
+import com.efscode.motorizen_backend.models.fuel_type.NewFuelTypeDTO;
+import com.efscode.motorizen_backend.models.user.NewUser;
+import com.efscode.motorizen_backend.models.user.UserDTO;
 import com.efscode.motorizen_backend.repositorys.BackLogRepository;
 import com.efscode.motorizen_backend.repositorys.BrandRepository;
 import com.efscode.motorizen_backend.repositorys.FuelTypeRepository;

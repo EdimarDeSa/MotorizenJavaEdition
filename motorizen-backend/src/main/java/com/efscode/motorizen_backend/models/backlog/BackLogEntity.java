@@ -1,6 +1,10 @@
-package com.efscode.motorizen_backend.models.entitys;
+package com.efscode.motorizen_backend.models.backlog;
 
 import java.time.LocalDateTime;
+
+import org.hibernate.annotations.CreationTimestamp;
+
+import com.efscode.motorizen_backend.models.user.UserEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,7 +17,6 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name = "backlog")

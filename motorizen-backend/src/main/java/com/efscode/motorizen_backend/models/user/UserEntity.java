@@ -1,4 +1,4 @@
-package com.efscode.motorizen_backend.models.entitys;
+package com.efscode.motorizen_backend.models.user;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -12,9 +12,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.efscode.motorizen_backend.interfaces.EntityInterface;
-import com.efscode.motorizen_backend.models.dtos.NewUser;
-import com.efscode.motorizen_backend.models.dtos.UserDTO;
+import com.efscode.motorizen_backend.models.vehicle.VehicleEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,7 +34,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserEntity implements EntityInterface<UserDTO>, UserDetails {
+public class UserEntity implements UserDetails {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
@@ -80,45 +78,7 @@ public class UserEntity implements EntityInterface<UserDTO>, UserDetails {
   @OneToMany(mappedBy = "user")
   private Set<VehicleEntity> vehicles;
 
-  public UserEntity(NewUser userDTO, String passwordHash) {
-    this.firstName = userDTO.getFirstName();
-    this.lastName = userDTO.getLastName();
-    this.email = userDTO.getEmail();
-    this.password = passwordHash;
-    this.birthdate = userDTO.getBirthdate();
-    this.isActive = true;
-    this.isAdministrator = false;
-  }
-
-  public String getFullName() {
-    return firstName + " " + lastName;
-  }
-
-  public String getInitials() {
-    return firstName.substring(0, 1) + lastName.substring(0, 1);
-  }
-
-  public Integer getAge() {
-    int thisYearAge = LocalDate.now().getYear() - birthdate.getYear();
-    if (LocalDate.now().getMonthValue() < birthdate.getMonthValue() ||
-        LocalDate.now().getDayOfMonth() < birthdate.getDayOfMonth()) {
-      thisYearAge--;
-    }
-    return thisYearAge;
-  }
-
-  public UserDTO toDTO() {
-    return UserDTO.builder()
-        .id(id)
-        .firstName(firstName)
-        .lastName(lastName)
-        .email(email)
-        .birthdate(birthdate)
-        .isActive(isActive)
-        .isAdministrator(isAdministrator)
-        .build();
-  }
-
+  @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     Set<GrantedAuthority> authorities = new HashSet<>();
 

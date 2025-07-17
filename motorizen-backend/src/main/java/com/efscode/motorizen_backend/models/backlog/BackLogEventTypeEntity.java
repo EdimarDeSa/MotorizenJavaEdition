@@ -1,4 +1,4 @@
-package com.efscode.motorizen_backend.models.entitys;
+package com.efscode.motorizen_backend.models.backlog;
 
 import java.time.LocalDateTime;
 
@@ -10,25 +10,29 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "brand")
+@Table(name = "backlog_event_type")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class BrandEntity {
+public class BackLogEventTypeEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
-  @Column(nullable = false, unique = true, length = 50)
+  @Column(nullable = false, unique = true, length = 30)
   private String name;
+
+  @ManyToOne
+  @JoinColumn(nullable = false, updatable = false, name = "backlog_severity_id")
+  private BackLogSeverityEntity backLogSeverity;
 
   @CreationTimestamp
   @Column(updatable = false)
@@ -36,7 +40,4 @@ public class BrandEntity {
 
   @UpdateTimestamp
   private LocalDateTime updatedAt;
-
-  @Column(nullable = true)
-  private LocalDateTime deletedAt;
 }

@@ -15,10 +15,10 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.efscode.motorizen_backend.enums.MotoriZenResponseCodeEnum;
 import com.efscode.motorizen_backend.errors.MotorizenException;
-import com.efscode.motorizen_backend.models.dtos.LoginDTO;
-import com.efscode.motorizen_backend.models.dtos.TokenDTO;
-import com.efscode.motorizen_backend.models.dtos.UserDTO;
-import com.efscode.motorizen_backend.models.entitys.UserEntity;
+import com.efscode.motorizen_backend.models.auth.LoginDTO;
+import com.efscode.motorizen_backend.models.auth.TokenDTO;
+import com.efscode.motorizen_backend.models.user.UserDTO;
+import com.efscode.motorizen_backend.models.user.UserEntity;
 import com.efscode.motorizen_backend.repositorys.UserRepository;
 
 import jakarta.annotation.PostConstruct;

@@ -1,4 +1,4 @@
-package com.efscode.motorizen_backend.models.entitys;
+package com.efscode.motorizen_backend.models.backlog;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

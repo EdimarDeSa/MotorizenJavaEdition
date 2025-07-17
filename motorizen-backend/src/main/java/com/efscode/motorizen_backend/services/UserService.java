@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 import com.efscode.motorizen_backend.Utils.Validators;
 import com.efscode.motorizen_backend.enums.MotoriZenResponseCodeEnum;
 import com.efscode.motorizen_backend.errors.MotorizenException;
-import com.efscode.motorizen_backend.models.dtos.NewUser;
-import com.efscode.motorizen_backend.models.entitys.UserEntity;
+import com.efscode.motorizen_backend.models.user.NewUser;
+import com.efscode.motorizen_backend.models.user.UserEntity;
 import com.efscode.motorizen_backend.repositorys.UserRepository;
 
 import lombok.RequiredArgsConstructor;

@@ -1,26 +1,29 @@
-package com.efscode.motorizen_backend.models.dtos;
+package com.efscode.motorizen_backend.models.vehicle;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.UUID;
 
+import com.efscode.motorizen_backend.models.brand.BrandDTO;
+import com.efscode.motorizen_backend.models.fuel_type.FuelTypeDTO;
+import com.efscode.motorizen_backend.models.user.UserDTO;
+
 import lombok.Builder;
 
 @Builder
 public record VehicleDTO(
-  UUID id,
-  UserDTO user,
-  BrandDTO brand,
-  FuelTypeDTO fuelType,
-  String model,
-  String renavam,
-  Integer year,
-  String color,
-  String licensePlate,
-  BigDecimal fuelCapacity,
-  BigDecimal odometer,
-  Boolean isActive
-) {
+    UUID id,
+    UserDTO user,
+    BrandDTO brand,
+    FuelTypeDTO fuelType,
+    String model,
+    String renavam,
+    Integer year,
+    String color,
+    String licensePlate,
+    BigDecimal fuelCapacity,
+    BigDecimal odometer,
+    Boolean isActive) {
 
   public void validate() {
     if (model.length() > 100) {

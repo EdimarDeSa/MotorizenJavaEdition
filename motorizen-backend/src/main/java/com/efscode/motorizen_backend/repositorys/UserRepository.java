@@ -5,7 +5,7 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.efscode.motorizen_backend.models.entitys.UserEntity;
+import com.efscode.motorizen_backend.models.user.UserEntity;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, UUID> {
