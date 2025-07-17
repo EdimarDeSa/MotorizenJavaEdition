@@ -5,10 +5,6 @@ import java.time.LocalDateTime;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.efscode.motorizen_backend.interfaces.EntityInterface;
-import com.efscode.motorizen_backend.models.dtos.BrandDTO;
-import com.efscode.motorizen_backend.models.dtos.NewBrandDTO;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,7 +22,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class BrandEntity implements EntityInterface<BrandDTO> {
+public class BrandEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
@@ -43,16 +39,4 @@ public class BrandEntity implements EntityInterface<BrandDTO> {
 
   @Column(nullable = true)
   private LocalDateTime deletedAt;
-
-  public BrandEntity(NewBrandDTO newBrand) {
-    this.name = newBrand.name();
-  }
-
-  @Override
-  public BrandDTO toDTO() {
-    return BrandDTO.builder()
-        .id(id)
-        .name(name)
-        .build();
-  }
 }

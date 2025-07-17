@@ -9,13 +9,17 @@ import com.efscode.motorizen_backend.models.entitys.BrandEntity;
 
 @Repository
 public interface BrandRepository extends JpaRepository<BrandEntity, Integer> {
+  BrandEntity findByIdAndDeletedAtIsNull(Integer id);
+
+  BrandEntity findByName(String name);
+
   List<BrandEntity> findByDeletedAtIsNull();
 
-  List<BrandEntity> findByNameContainingIgnoreCase(String name);
+  List<BrandEntity> findByNameContainingIgnoreCaseAndDeletedAtIsNull(String name);
 
-  Boolean existsByName(String name);
+  Boolean existsByNameAndDeletedAtIsNull(String name);
+
+  Boolean existsByNameAndDeletedAtIsNotNull(String name);
 
   Boolean existsByNameAndIdNot(String name, Integer id);
-
-  Integer findIdByName(String name);
 }

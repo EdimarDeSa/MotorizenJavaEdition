@@ -4,10 +4,11 @@ import org.springframework.stereotype.Component;
 
 import com.efscode.motorizen_backend.enums.MotoriZenResponseCodeEnum;
 import com.efscode.motorizen_backend.errors.MotorizenException;
-import com.efscode.motorizen_backend.models.dtos.BrandDTO;
 import com.efscode.motorizen_backend.models.dtos.FuelTypeDTO;
+import com.efscode.motorizen_backend.models.dtos.NewFuelTypeDTO;
 import com.efscode.motorizen_backend.models.dtos.NewUser;
 import com.efscode.motorizen_backend.models.dtos.UserDTO;
+import com.efscode.motorizen_backend.models.dtos.brand.BrandDTO;
 import com.efscode.motorizen_backend.repositorys.BackLogRepository;
 import com.efscode.motorizen_backend.repositorys.BrandRepository;
 import com.efscode.motorizen_backend.repositorys.FuelTypeRepository;
@@ -27,16 +28,22 @@ public class Validators {
   private final RegisterRepository registerRepo;
   private final BackLogRepository backLogRepo;
 
-  public void validateBrand(BrandDTO brand) {
-    validateLength(brand.name(), 2, 50, MotoriZenResponseCodeEnum.INVALID_BRAND_NAME);
+  public void validateNewBrand(BrandDTO brand) {
+    validateBrandData(brand);
+
+    if (brandRepo.existsByNameAndDeletedAtIsNull(brand.name()))
+      throw new MotorizenException(MotoriZenResponseCodeEnum.BRAND_ALREADY_EXISTS);
   }
 
-  public void validateNewBrand(BrandDTO brand) {
-    validateBrand(brand);
+  public void validateBrandUpdates(BrandDTO brand, Integer id) {
+    validateBrandData(brand);
 
-    if (brandRepo.existsByName(brand.name())) {
+    if (brandRepo.existsByNameAndIdNot(brand.name(), id))
       throw new MotorizenException(MotoriZenResponseCodeEnum.BRAND_ALREADY_EXISTS);
-    }
+  }
+
+  private void validateBrandData(BrandDTO brand) {
+    validateLength(brand.name(), 2, 50, MotoriZenResponseCodeEnum.INVALID_BRAND_NAME);
   }
 
   public void validateUser(UserDTO user) {
@@ -73,6 +80,10 @@ public class Validators {
 
   public void validateFuelType(FuelTypeDTO dto) {
     validateLength(dto.name(), 2, 20, MotoriZenResponseCodeEnum.INVALID_FUEL_TYPE_NAME);
+  }
+
+  public void validateNewFuelType(NewFuelTypeDTO dto) {
+    validateFuelType(dto.toDTO());
 
     if (fuelTypeRepo.existsByName(dto.name())) {
       throw new MotorizenException(MotoriZenResponseCodeEnum.FUEL_TYPE_ALREADY_EXISTS);

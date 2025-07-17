@@ -4,16 +4,18 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import lombok.RequiredArgsConstructor;
 
 import com.efscode.motorizen_backend.Utils.Validators;
 import com.efscode.motorizen_backend.enums.MotoriZenResponseCodeEnum;
 import com.efscode.motorizen_backend.errors.MotorizenException;
-import com.efscode.motorizen_backend.models.dtos.BrandDTO;
-import com.efscode.motorizen_backend.models.dtos.BrandUpdatesDTO;
-import com.efscode.motorizen_backend.models.dtos.NewBrandDTO;
+import com.efscode.motorizen_backend.models.dtos.brand.BrandDTO;
+import com.efscode.motorizen_backend.models.dtos.brand.BrandMapper;
+import com.efscode.motorizen_backend.models.dtos.brand.BrandUpdatesDTO;
+import com.efscode.motorizen_backend.models.dtos.brand.NewBrandDTO;
 import com.efscode.motorizen_backend.models.entitys.BrandEntity;
 import com.efscode.motorizen_backend.repositorys.BrandRepository;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -22,60 +24,71 @@ public class BrandService {
   private final Validators validators;
 
   public List<BrandDTO> findAllBrands() {
-    var brands = brandRepo.findAll();
+    List<BrandEntity> brands = brandRepo.findByDeletedAtIsNull();
+
     if (brands.isEmpty())
       throw new MotorizenException(MotoriZenResponseCodeEnum.BRAND_NOT_FOUND);
-    return brands.stream()
-        .map(BrandEntity::toDTO)
-        .toList();
+
+    return BrandMapper.INSTANCE.entitiesToDtos(brands);
   }
 
   public List<BrandDTO> filterBrands(String filter) {
-    var brands = brandRepo.findByNameContainingIgnoreCase(filter);
+    List<BrandEntity> brands = brandRepo.findByNameContainingIgnoreCaseAndDeletedAtIsNull(filter);
+
     if (brands.isEmpty())
       throw new MotorizenException(MotoriZenResponseCodeEnum.BRAND_NOT_FOUND);
-    return brands.stream()
-        .map(BrandEntity::toDTO)
-        .toList();
+
+    return BrandMapper.INSTANCE.entitiesToDtos(brands);
   }
 
   public void createNewBrand(NewBrandDTO newBrand) {
     try {
-      validators.validateNewBrand(newBrand.toDTO());
-      BrandEntity brand = new BrandEntity(newBrand);
+      validators.validateNewBrand(BrandMapper.INSTANCE.newDtoToDto(newBrand));
+
+      BrandEntity brand = createNewOrReactivateBrand(newBrand);
+
       brandRepo.save(brand);
+
     } catch (IllegalArgumentException e) {
       throw new MotorizenException(MotoriZenResponseCodeEnum.INVALID_BRAND_NAME);
     }
   }
 
   public BrandDTO updateBrand(Integer id, BrandUpdatesDTO brandUpdates) {
-    BrandEntity brand = brandRepo.findById(id)
-        .orElseThrow(() -> new MotorizenException(MotoriZenResponseCodeEnum.BRAND_NOT_FOUND));
+    validators.validateBrandUpdates(BrandMapper.INSTANCE.updatesDtoToDto(brandUpdates), id);
 
-    if (brand.getDeletedAt() != null)
-      throw new MotorizenException(MotoriZenResponseCodeEnum.BRAND_NOT_FOUND);
+    BrandEntity brand = brandRepo.findByIdAndDeletedAtIsNull(id);
 
-    if (brandRepo.existsByNameAndIdNot(brandUpdates.name(), id))
-      throw new MotorizenException(MotoriZenResponseCodeEnum.BRAND_ALREADY_EXISTS);
-
-    if (brandUpdates.name() != null && !brandUpdates.name().isBlank()) {
-      brand.setName(brandUpdates.name());
-    }
-
-    validators.validateBrand(brand.toDTO());
+    BrandMapper.INSTANCE.updateEntityFromDto(brandUpdates, brand);
 
     brandRepo.save(brand);
 
-    return brand.toDTO();
+    return BrandMapper.INSTANCE.entityToDto(brand);
   }
 
   public void deleteBrand(Integer id) {
-    BrandEntity brand = brandRepo.findById(id)
-        .orElseThrow(() -> new MotorizenException(MotoriZenResponseCodeEnum.BRAND_NOT_FOUND));
+    BrandEntity brand = brandRepo.findByIdAndDeletedAtIsNull(id);
+
+    if (brand == null)
+      throw new MotorizenException(MotoriZenResponseCodeEnum.BRAND_NOT_FOUND);
 
     brand.setDeletedAt(LocalDateTime.now());
 
     brandRepo.save(brand);
+  }
+
+  private BrandEntity createNewOrReactivateBrand(NewBrandDTO newBrand) {
+    BrandEntity brand;
+
+    if (brandRepo.existsByNameAndDeletedAtIsNotNull(newBrand.name())) {
+      brand = brandRepo.findByName(newBrand.name());
+
+      brand.setDeletedAt(null);
+
+    } else {
+      brand = BrandMapper.INSTANCE.newDtoToEntity(newBrand);
+    }
+
+    return brand;
   }
 }
