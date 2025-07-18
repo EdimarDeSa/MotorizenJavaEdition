@@ -48,7 +48,11 @@ public class AuthController {
   @GetMapping("/logout")
   public ResponseEntity<ApiResponseBody<Void>> logout() {
     // TODO: Criar limpeza dos caches
+    log.debug("Iniciando logout");
+
+    authService.logout();
     ApiResponseBody<Void> response = ApiResponseBody.ok(null);
+
     return ResponseEntity.ok(response);
   }
 

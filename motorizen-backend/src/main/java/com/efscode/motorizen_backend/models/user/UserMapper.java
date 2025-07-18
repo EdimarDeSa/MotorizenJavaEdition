@@ -4,42 +4,35 @@ import java.util.Set;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
+import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface UserMapper {
 
   @Mapping(target = "firstName", source = "dto.firstName", qualifiedByName = "capitalizeName")
   @Mapping(target = "lastName", source = "dto.lastName", qualifiedByName = "capitalizeName")
   @Mapping(target = "email", expression = "java(dto.email().toLowerCase())")
   @Mapping(target = "password", source = "passwordHash")
-  @Mapping(target = "id", ignore = true)
   @Mapping(target = "isActive", constant = "true")
   @Mapping(target = "isAdministrator", constant = "false")
-  @Mapping(target = "vehicles", ignore = true)
-  @Mapping(target = "createdAt", ignore = true)
-  @Mapping(target = "updatedAt", ignore = true)
-  @Mapping(target = "deletedAt", ignore = true)
   UserEntity newDtoToEntity(NewUserDTO dto, String passwordHash);
+
+  @Mapping(target = "firstName", source = "dto.firstName", qualifiedByName = "capitalizeName")
+  @Mapping(target = "lastName", source = "dto.lastName", qualifiedByName = "capitalizeName")
+  void updateEntityFromDto(UserUpdatesDTO dto, @MappingTarget UserEntity entity);
 
   @Mapping(target = "createdAt", dateFormat = "dd-MM-yyyy HH:mm:ss")
   @Mapping(target = "updatedAt", dateFormat = "dd-MM-yyyy HH:mm:ss")
   @Mapping(target = "deletedAt", dateFormat = "dd-MM-yyyy HH:mm:ss")
   UserDTO entityToDto(UserEntity entity);
 
-  @Mapping(target = "id", ignore = true)
-  @Mapping(target = "isActive", constant = "true")
-  @Mapping(target = "isAdministrator", constant = "false")
-  @Mapping(target = "createdAt", ignore = true)
-  @Mapping(target = "updatedAt", ignore = true)
-  @Mapping(target = "deletedAt", ignore = true)
-  UserDTO newDtoToDto(NewUserDTO newDTO);
-
   @Named("capitalizeName")
   default String capitalizeName(String name) {
     String[] names = name.split(" ");
     StringBuilder fullNameBuilder = new StringBuilder();
-    Set<String> ignoreWords = Set.of("de", "da", "do", "dos", "das");
+    Set<String> ignoreWords = Set.of("de", "da", "do", "dos", "das", "e", "a", "o", "os", "as");
 
     for (String namePiece : names) {
       if (ignoreWords.contains(namePiece.toLowerCase())) {

@@ -13,7 +13,7 @@ import com.efscode.motorizen_backend.models.brand.BrandMapper;
 import com.efscode.motorizen_backend.models.brand.BrandUpdatesDTO;
 import com.efscode.motorizen_backend.models.brand.NewBrandDTO;
 import com.efscode.motorizen_backend.repositorys.BrandRepository;
-import com.efscode.motorizen_backend.utils.Validators;
+import com.efscode.motorizen_backend.utils.validators.Validators;
 
 import lombok.RequiredArgsConstructor;
 

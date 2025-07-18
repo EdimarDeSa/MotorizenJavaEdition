@@ -186,4 +186,9 @@ public class AuthService {
     }
   }
 
+  public void logout() {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'logout'");
+  }
+
 }
