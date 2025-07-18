@@ -45,7 +45,10 @@
 	// 	"SERVER_TOMCAT_MAX_THREADS": "50",
 	// 	"SERVER_TOMCAT_MIN_SPARE_THREADS": "10"
 	// },
-	// "forwardPorts": [],
+	"forwardPorts": [
+		8080,
+		4200
+	],
 	"postCreateCommand": ". .devcontainer/devcontainer-setup.sh"
 	// "remoteUser": "root"
 }
