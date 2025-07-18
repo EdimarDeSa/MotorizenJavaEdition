@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import com.efscode.motorizen_backend.enums.MotoriZenResponseCodeEnum;
 import com.efscode.motorizen_backend.models.fuel_type.FuelTypeUpdatesDTO;
 import com.efscode.motorizen_backend.models.fuel_type.NewFuelTypeDTO;
-import com.efscode.motorizen_backend.repositorys.FuelTypeRepository;
+import com.efscode.motorizen_backend.repositories.FuelTypeRepository;
 
 import lombok.AllArgsConstructor;
 

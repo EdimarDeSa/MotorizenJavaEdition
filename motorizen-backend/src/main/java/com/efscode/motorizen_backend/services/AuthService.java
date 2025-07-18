@@ -20,7 +20,7 @@ import com.efscode.motorizen_backend.models.auth.TokenDTO;
 import com.efscode.motorizen_backend.models.user.UserDTO;
 import com.efscode.motorizen_backend.models.user.UserEntity;
 import com.efscode.motorizen_backend.models.user.UserMapper;
-import com.efscode.motorizen_backend.repositorys.UserRepository;
+import com.efscode.motorizen_backend.repositories.UserRepository;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;

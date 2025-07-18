@@ -15,7 +15,7 @@ import com.efscode.motorizen_backend.models.user.UserMapper;
 import com.efscode.motorizen_backend.models.user.UserUpdateEmailDTO;
 import com.efscode.motorizen_backend.models.user.UserUpdatePasswordDTO;
 import com.efscode.motorizen_backend.models.user.UserUpdatesDTO;
-import com.efscode.motorizen_backend.repositorys.UserRepository;
+import com.efscode.motorizen_backend.repositories.UserRepository;
 import com.efscode.motorizen_backend.utils.validators.UserValidator;
 
 import lombok.RequiredArgsConstructor;

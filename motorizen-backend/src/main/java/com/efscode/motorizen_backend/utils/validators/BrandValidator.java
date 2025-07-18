@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import com.efscode.motorizen_backend.enums.MotoriZenResponseCodeEnum;
 import com.efscode.motorizen_backend.models.brand.BrandUpdatesDTO;
 import com.efscode.motorizen_backend.models.brand.NewBrandDTO;
-import com.efscode.motorizen_backend.repositorys.BrandRepository;
+import com.efscode.motorizen_backend.repositories.BrandRepository;
 
 import lombok.RequiredArgsConstructor;
 

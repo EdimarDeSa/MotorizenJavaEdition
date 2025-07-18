@@ -8,7 +8,7 @@ import com.efscode.motorizen_backend.enums.MotoriZenResponseCodeEnum;
 import com.efscode.motorizen_backend.models.user.NewUserDTO;
 import com.efscode.motorizen_backend.models.user.UserUpdateEmailDTO;
 import com.efscode.motorizen_backend.models.user.UserUpdatesDTO;
-import com.efscode.motorizen_backend.repositorys.UserRepository;
+import com.efscode.motorizen_backend.repositories.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 

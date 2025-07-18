@@ -1,4 +1,4 @@
-package com.efscode.motorizen_backend.repositorys;
+package com.efscode.motorizen_backend.repositories;
 
 import java.util.List;
 

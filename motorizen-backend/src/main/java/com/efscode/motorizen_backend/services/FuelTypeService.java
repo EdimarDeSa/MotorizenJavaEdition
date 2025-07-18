@@ -11,7 +11,7 @@ import com.efscode.motorizen_backend.models.fuel_type.FuelTypeEntity;
 import com.efscode.motorizen_backend.models.fuel_type.FuelTypeMapper;
 import com.efscode.motorizen_backend.models.fuel_type.FuelTypeUpdatesDTO;
 import com.efscode.motorizen_backend.models.fuel_type.NewFuelTypeDTO;
-import com.efscode.motorizen_backend.repositorys.FuelTypeRepository;
+import com.efscode.motorizen_backend.repositories.FuelTypeRepository;
 import com.efscode.motorizen_backend.utils.validators.FuelTypeValidator;
 
 import lombok.RequiredArgsConstructor;
