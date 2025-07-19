@@ -15,6 +15,7 @@ import com.efscode.motorizen_backend.models.brand.NewBrandDTO;
 import com.efscode.motorizen_backend.repositories.BrandRepository;
 import com.efscode.motorizen_backend.utils.validators.BrandValidator;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -42,6 +43,7 @@ public class BrandService {
     return brandMapper.entitiesToDtos(brands);
   }
 
+  @Transactional
   public void createBrand(NewBrandDTO newBrand) {
     try {
       validator.validateNewBrand(newBrand);
@@ -55,6 +57,7 @@ public class BrandService {
     }
   }
 
+  @Transactional
   public BrandDTO updateBrand(Integer id, BrandUpdatesDTO brandUpdates) {
     validator.validateBrandUpdates(brandUpdates, id);
 
@@ -70,6 +73,7 @@ public class BrandService {
     return brandMapper.entityToDto(brand);
   }
 
+  @Transactional
   public void deleteBrand(Integer id) {
     BrandEntity brand = brandRepo.findByIdAndDeletedAtIsNull(id);
 
