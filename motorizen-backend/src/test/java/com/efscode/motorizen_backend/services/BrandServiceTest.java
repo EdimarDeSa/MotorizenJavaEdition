@@ -26,12 +26,16 @@ public class BrandServiceTest {
   @Autowired
   private BrandRepository brandRepo;
 
+  private String marca1 = "Marca Teste 1";
+  private String marca2 = "Marca Teste 2";
+  private String marca3 = "Marca Teste 3";
+
   @Test
   @DisplayName("Deve criar uma nova marca com sucesso")
   @Transactional
   void testCreateBrandSuccess() {
     // Given
-    NewBrandDTO newBrand = new NewBrandDTO("Nova Marca");
+    NewBrandDTO newBrand = new NewBrandDTO(marca1);
 
     // When
     brandService.createBrand(newBrand);
@@ -45,7 +49,7 @@ public class BrandServiceTest {
   @Transactional
   void testDeleteBrandSuccess() {
     //
-    BrandEntity brand = createBrand("Marca Teste");
+    BrandEntity brand = createBrand(marca1);
 
     // When
     brandService.deleteBrand(brand.getId());
@@ -61,11 +65,13 @@ public class BrandServiceTest {
   @Transactional
   void testFilterBrandsSuccess() {
     // Given
-    createBrand("Marca Teste");
-    createBrand("Outra Marca");
+    String filter = "Marca";
+
+    createBrand(marca1);
+    createBrand(marca2);
 
     // When
-    var filteredBrands = brandService.filterBrands("Marca");
+    var filteredBrands = brandService.filterBrands(filter);
 
     // Then
     assertNotNull(filteredBrands);
@@ -77,9 +83,9 @@ public class BrandServiceTest {
   @Transactional
   void testFindAllBrandsSuccess() {
     // Given
-    createBrand("Marca Teste 1");
-    createBrand("Marca Teste 2");
-    createBrand("Marca Teste 3");
+    createBrand(marca1);
+    createBrand(marca2);
+    createBrand(marca3);
 
     // When
     var brands = brandService.findAllBrands();
@@ -94,16 +100,17 @@ public class BrandServiceTest {
   @Transactional
   void testUpdateBrandSuccess() {
     // Given
-    BrandEntity brand = createBrand("Marca Antiga");
-    var brandUpdates = new BrandUpdatesDTO("Marca Nova");
+    BrandEntity brand = createBrand(marca1);
+    String newName = "Nova Marca";
+    var brandUpdates = new BrandUpdatesDTO(newName);
 
     // When
     var updatedBrand = brandService.updateBrand(brand.getId(), brandUpdates);
 
     // Then
     assertNotNull(updatedBrand);
-    assertTrue(updatedBrand.name().equals("Marca Nova"));
-    
+    assertTrue(updatedBrand.name().equals(newName));
+
   }
 
   private BrandEntity createBrand(String name) {
