@@ -12,6 +12,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.efscode.motorizen_backend.enums.UserRoles;
 import com.efscode.motorizen_backend.models.vehicle.VehicleEntity;
 
 import jakarta.persistence.Column;
@@ -82,10 +83,10 @@ public class UserEntity implements UserDetails {
   public Collection<? extends GrantedAuthority> getAuthorities() {
     Set<GrantedAuthority> authorities = new HashSet<>();
 
-    authorities.add(() -> "ROLE_USER");
+    authorities.add(() -> UserRoles.ROLE_USER.name());
 
     if (isAdministrator) {
-      authorities.add(() -> "ROLE_ADMIN");
+      authorities.add(() -> UserRoles.ROLE_ADMIN.name());
     }
 
     return authorities;
