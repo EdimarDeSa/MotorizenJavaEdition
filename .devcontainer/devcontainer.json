@@ -1,6 +1,9 @@
 {
 	"name": "Java",
-	"image": "mcr.microsoft.com/devcontainers/java:21",
+	// "image": "mcr.microsoft.com/devcontainers/java:21",
+	"dockerComposeFile": "docker-compose.yml",
+	"workspaceFolder": "/workspace/MotorizenJavaEdition",
+	"service": "java",
 	"features": {
 		"ghcr.io/devcontainers/features/java:1": {
 			"version": "none",
@@ -21,6 +24,7 @@
 				"cweijan.vscode-redis-client",
 				"Gruntfuggly.todo-tree",
 				"redhat.vscode-yaml",
+				"google.geminicodeassist",
 				"Catppuccin.catppuccin-vsc-pack",
 				"esbenp.prettier-vscode",
 				"inferrinizzard.prettier-sql-vscode",
@@ -33,22 +37,10 @@
 			]
 		}
 	},
-	// "runArgs": [
-	// 	"--memory=8g",
-	// 	"--memory-swap=9g",
-	// 	"--cpus=8",
-	// 	"--oom-kill-disable=false"
-	// ],
-	// "containerEnv": {
-	// 	"JAVA_TOOL_OPTIONS": "-Xmx2g -Xms512m",
-	// 	"MAVEN_OPTS": "-Xmx1g -Xms256m",
-	// 	"SERVER_TOMCAT_MAX_THREADS": "50",
-	// 	"SERVER_TOMCAT_MIN_SPARE_THREADS": "10"
-	// },
 	"forwardPorts": [
 		8080,
 		4200
 	],
-	"postCreateCommand": ". .devcontainer/devcontainer-setup.sh"
+	"postCreateCommand": ". .devcontainer/devcontainer-setup.sh && make dev_up"
 	// "remoteUser": "root"
 }

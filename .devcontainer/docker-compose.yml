@@ -1,0 +1,20 @@
+services:
+  java:
+    image: mcr.microsoft.com/devcontainers/java:21
+    volumes:
+      - ..:/workspace/MotorizenJavaEdition:cached
+    cap_add:
+      - SYS_PTRACE
+    command: /bin/sh -c "while sleep 1000; do :; done"
+    networks:
+      - devcontainer_net
+
+networks:
+  devcontainer_net:
+    external: true
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
