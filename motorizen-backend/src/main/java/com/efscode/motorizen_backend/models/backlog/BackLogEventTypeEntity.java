@@ -15,11 +15,13 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "backlog_event_type")
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class BackLogEventTypeEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
