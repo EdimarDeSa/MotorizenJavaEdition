@@ -1,19 +1,19 @@
 CREATE TABLE
   IF NOT EXISTS "vehicle" (
     "id" UUID PRIMARY KEY DEFAULT gen_random_uuid (),
-    "user_id" UUID NOT NULL REFERENCES "users" ("id"),
+    "user_id" UUID NOT NULL REFERENCES "users" ("id") ON DELETE CASCADE,
     "brand_id" INTEGER NOT NULL REFERENCES "brand" ("id"),
     "fuel_type_id" INTEGER NOT NULL REFERENCES "fuel_type" ("id"),
     "model" VARCHAR(100) NOT NULL,
     "renavam" VARCHAR(11) UNIQUE DEFAULT NULL,
     "year" SMALLINT NOT NULL,
     "color" VARCHAR(25) NOT NULL,
-    "licence_plate" VARCHAR(10) UNIQUE DEFAULT NULL,
-    "fuel_capacity" DECIMAL(10, 4),
-    "odometer" DECIMAL(10, 4),
+    "license_plate" VARCHAR(10) UNIQUE DEFAULT NULL,
+    "fuel_capacity" DECIMAL(10, 4) NOT NULL,
+    "odometer" DECIMAL(10, 4) NOT NULL,
     "is_active" BOOLEAN DEFAULT TRUE NOT NULL,
-    "updated_at" TIMESTAMPTZ DEFAULT now (),
-    "created_at" TIMESTAMPTZ DEFAULT now (),
+    "updated_at" TIMESTAMPTZ NOT NULL DEFAULT now (),
+    "created_at" TIMESTAMPTZ NOT NULL DEFAULT now (),
     "deleted_at" TIMESTAMPTZ
   );
 

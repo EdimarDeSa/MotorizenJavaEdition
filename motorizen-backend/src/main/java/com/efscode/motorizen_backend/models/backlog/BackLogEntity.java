@@ -16,13 +16,11 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "backlog")
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class BackLogEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -11,11 +11,8 @@ import com.efscode.motorizen_backend.models.brand.BrandEntity;
 import com.efscode.motorizen_backend.models.fuel_type.FuelTypeEntity;
 import com.efscode.motorizen_backend.models.user.UserEntity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -23,36 +20,34 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "vehicle")
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 public class VehicleEntity {
   @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
   @JoinColumn(nullable = false, name = "user_id")
   private UserEntity user;
 
-  @ManyToOne(cascade = CascadeType.PERSIST)
+  @ManyToOne()
   @JoinColumn(nullable = false, name = "brand_id")
   private BrandEntity brand;
 
-  @ManyToOne(cascade = CascadeType.PERSIST)
-  @JoinColumn(nullable = true, name = "fuel_type_id")
+  @ManyToOne()
+  @JoinColumn(nullable = false, name = "fuel_type_id")
   private FuelTypeEntity fuelType;
 
   @Column(nullable = false, length = 100)
   private String model;
 
-  @Column(nullable = false, length = 11)
-  private String renavam;
+  @Column(nullable = true, length = 11, unique = true)
+  @Builder.Default
+  private String renavam = null;
 
   @Column(nullable = false)
   private Integer year;
@@ -60,7 +55,7 @@ public class VehicleEntity {
   @Column(nullable = false, length = 25)
   private String color;
 
-  @Column(nullable = false, length = 10)
+  @Column(nullable = true, length = 10, unique = true)
   private String licensePlate;
 
   @Column(nullable = false, precision = 10, scale = 4)
@@ -69,7 +64,7 @@ public class VehicleEntity {
   @Column(nullable = false, precision = 10, scale = 4)
   private BigDecimal odometer;
 
-  @Column(nullable = false)
+  @Column
   @Builder.Default
   private Boolean isActive = true;
 
@@ -78,6 +73,7 @@ public class VehicleEntity {
   private LocalDateTime createdAt;
 
   @UpdateTimestamp
+  @Column(nullable = false)
   private LocalDateTime updatedAt;
 
   @Column(nullable = true)

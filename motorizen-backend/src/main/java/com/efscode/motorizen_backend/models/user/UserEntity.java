@@ -26,18 +26,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
 @Table(name = "users")
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 public class UserEntity implements UserDetails {
   @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
   @Column(length = 50, nullable = false)
