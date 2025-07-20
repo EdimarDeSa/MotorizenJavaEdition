@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,16 +21,15 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Component
+@RequiredArgsConstructor
 @Slf4j
 public class TokenAuthFilter extends OncePerRequestFilter {
-  @Autowired
-  private AuthService authService;
-
-  @Autowired
-  private UserMapper userMapper;
+  private final AuthService authService;
+  private final UserMapper userMapper;
 
   @Override
   protected void doFilterInternal(@NonNull HttpServletRequest request,
