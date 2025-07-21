@@ -21,12 +21,14 @@ import com.efscode.motorizen_backend.models.fuel_type.FuelTypeUpdatesDTO;
 import com.efscode.motorizen_backend.models.fuel_type.NewFuelTypeDTO;
 import com.efscode.motorizen_backend.services.FuelTypeService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/fuel-type")
 @RequiredArgsConstructor
+@Tag(name = "Fuel Types", description = "Fuel Types API")
 @Slf4j
 public class FuelTypeController {
   private final FuelTypeService fuelTypeService;
@@ -38,6 +40,18 @@ public class FuelTypeController {
     ApiResponseBody<List<FuelTypeDTO>> content = ApiResponseBody.ok(fuelTypes);
 
     return ResponseEntity.ok(content);
+  }
+
+  @GetMapping("/details/{id}")
+  public ResponseEntity<ApiResponseBody<FuelTypeDTO>> findFuelTypeById(@PathVariable Integer id) {
+    log.debug("Iniciando findFuelTypeById para o id`{}`", id);
+
+    FuelTypeDTO fuelType = fuelTypeService.findFuelTypeById(id);
+
+    ApiResponseBody<FuelTypeDTO> content = ApiResponseBody.ok(fuelType);
+
+    return ResponseEntity.ok(content);
+
   }
 
   @GetMapping("/search/{filter}")

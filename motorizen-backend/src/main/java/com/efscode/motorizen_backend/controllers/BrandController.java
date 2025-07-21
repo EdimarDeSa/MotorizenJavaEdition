@@ -20,12 +20,14 @@ import com.efscode.motorizen_backend.models.brand.BrandUpdatesDTO;
 import com.efscode.motorizen_backend.models.brand.NewBrandDTO;
 import com.efscode.motorizen_backend.services.BrandService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/brand")
 @RequiredArgsConstructor
+@Tag(name = "Brands", description = "Brands API")
 @Slf4j
 public class BrandController {
   private final BrandService brandService;
@@ -46,6 +48,16 @@ public class BrandController {
     List<BrandDTO> brands = brandService.filterBrands(filter);
 
     ApiResponseBody<List<BrandDTO>> content = ApiResponseBody.ok(brands);
+
+    return ResponseEntity.ok(content);
+  }
+
+  @GetMapping("/details/{id}")
+  public ResponseEntity<ApiResponseBody<BrandDTO>> findBrandById(@PathVariable Integer id) {
+    log.debug("Iniciando findBrandById para o id`{}`", id);
+    BrandDTO brand = brandService.findBrandById(id);
+
+    ApiResponseBody<BrandDTO> content = ApiResponseBody.ok(brand);
 
     return ResponseEntity.ok(content);
   }

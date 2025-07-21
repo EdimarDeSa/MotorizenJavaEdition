@@ -32,6 +32,25 @@ public class FuelTypeService {
     return fuelTypeMapper.entitiesToDtos(fuelTypes);
   }
 
+  public FuelTypeDTO findFuelTypeById(Integer id) {
+    FuelTypeEntity fuelType = fuelTypeRepo.findByIdAndDeletedAtIsNull(id);
+
+    if (fuelType == null)
+      throw new MotorizenException(MotoriZenResponseCodeEnum.FUEL_TYPE_NOT_FOUND);
+
+    return fuelTypeMapper.entityToDto(fuelType);
+
+  }
+
+  public FuelTypeEntity selectFuelTypeById(Integer id) {
+    FuelTypeEntity fuelType = fuelTypeRepo.findByIdAndDeletedAtIsNull(id);
+
+    if (fuelType == null)
+      throw new MotorizenException(MotoriZenResponseCodeEnum.FUEL_TYPE_NOT_FOUND);
+
+    return fuelType;
+  }
+
   public List<FuelTypeDTO> filterFuelTypes(String filter) {
     List<FuelTypeEntity> fuelTypes = fuelTypeRepo.findByNameContainingIgnoreCaseAndDeletedAtIsNull(filter);
 

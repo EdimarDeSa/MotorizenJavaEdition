@@ -34,6 +34,24 @@ public class BrandService {
     return brandMapper.entitiesToDtos(brands);
   }
 
+  public BrandDTO findBrandById(Integer id) {
+    BrandEntity brand = brandRepo.findByIdAndDeletedAtIsNull(id);
+
+    if (brand == null)
+      throw new MotorizenException(MotoriZenResponseCodeEnum.BRAND_NOT_FOUND);
+
+    return brandMapper.entityToDto(brand);
+  }
+
+  public BrandEntity selectBrandById(Integer id) {
+    BrandEntity brand = brandRepo.findByIdAndDeletedAtIsNull(id);
+
+    if (brand == null)
+      throw new MotorizenException(MotoriZenResponseCodeEnum.BRAND_NOT_FOUND);
+
+    return brand;
+  }
+
   public List<BrandDTO> filterBrands(String filter) {
     List<BrandEntity> brands = brandRepo.findByNameContainingIgnoreCaseAndDeletedAtIsNull(filter);
 
