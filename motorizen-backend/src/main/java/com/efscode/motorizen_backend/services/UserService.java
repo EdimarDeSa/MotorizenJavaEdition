@@ -103,4 +103,13 @@ public class UserService {
 
     userRepo.save(user);
   }
+
+  public UserEntity selectUserById(UUID id) {
+    UserEntity user = userRepo.findByIdAndDeletedAtIsNull(id);
+
+    if (user == null)
+      throw new MotorizenException(MotoriZenResponseCodeEnum.USER_NOT_FOUND);
+
+    return user;
+  }
 }

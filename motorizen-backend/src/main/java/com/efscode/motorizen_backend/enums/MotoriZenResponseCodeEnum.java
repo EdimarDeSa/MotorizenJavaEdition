@@ -26,7 +26,6 @@ public enum MotoriZenResponseCodeEnum {
   INVALID_USER_NAME(-402, HttpStatus.BAD_REQUEST, "Invalid user name."),
   UNAUTHORIZED_ACCESS(-403, HttpStatus.FORBIDDEN, "Unauthorized access."),
 
-
   // Erros de login -2xx
   LOGIN_ERROR(-200, HttpStatus.UNAUTHORIZED, "Login error."),
   LOGOUT_ERROR(-201, HttpStatus.UNAUTHORIZED, "Logout error."),
@@ -47,15 +46,47 @@ public enum MotoriZenResponseCodeEnum {
   BRAND_ALREADY_EXISTS(-316, HttpStatus.CONFLICT, "Brand already exists."),
   INVALID_FUEL_TYPE_NAME(-317, HttpStatus.BAD_REQUEST, "Invalid fuel type name."),
   FUEL_TYPE_ALREADY_EXISTS(-318, HttpStatus.CONFLICT, "Fuel type already exists."),
+  INVALID_VEHICLE_MODEL(-319, HttpStatus.BAD_REQUEST, "Invalid vehicle model."),
+  INVALID_VEHICLE_RENAVAM(-320, HttpStatus.BAD_REQUEST, "Invalid vehicle renavam."),
+  VEHICLE_RENAVAM_ALREADY_EXISTS(-321, HttpStatus.CONFLICT, "Vehicle renavam already exists."),
+  INVALID_VEHICLE_YEAR(-322, HttpStatus.BAD_REQUEST, "Invalid vehicle year."),
+  INVALID_VEHICLE_COLOR(-323, HttpStatus.BAD_REQUEST, "Invalid vehicle color."),
+  INVALID_VEHICLE_LICENSE_PLATE(-324, HttpStatus.BAD_REQUEST, "Invalid vehicle license plate."),
+  VEHICLE_LICENSE_PLATE_ALREADY_EXISTS(-325, HttpStatus.CONFLICT, "Vehicle license plate already exists."),
+  INVALID_VEHICLE_FUEL_CAPACITY(-326, HttpStatus.BAD_REQUEST, "Invalid vehicle fuel capacity."),
+  INVALID_VEHICLE_ODOMETER(-327, HttpStatus.BAD_REQUEST, "Invalid vehicle odometer."),
 
   // Erros de relatórios -4xx
   INVALID_SORT_KEY(-800, HttpStatus.BAD_REQUEST, "Invalid sort key."),
 
+  // Erros 'globais' -5xx
+  INVALID_REQUEST_BODY(-500, HttpStatus.BAD_REQUEST, "Invalid request body."),
+
   // Erros internos -9xx
   CONFIG_FILE_NOT_FOUND(-900, HttpStatus.INTERNAL_SERVER_ERROR, "Config file not found."),
-  UNKNOWN_ERROR(-999, HttpStatus.INTERNAL_SERVER_ERROR, "Não foi possível processar a requisição. Tente novamente mais tarde ou entre em contato com o suporte.");
+  UNKNOWN_ERROR(-999, HttpStatus.INTERNAL_SERVER_ERROR,
+      "Não foi possível processar a requisição. Tente novamente mais tarde ou entre em contato com o suporte.");
 
   private final Integer responseCode;
   private final HttpStatus httpStatus;
   private final String message;
+
+  public static MotoriZenResponseCodeEnum getByResponseCode(Integer responseCode) {
+    for (MotoriZenResponseCodeEnum code : MotoriZenResponseCodeEnum.values()) {
+      if (code.getResponseCode().equals(responseCode)) {
+        return code;
+      }
+    }
+    return UNKNOWN_ERROR;
+  }
+
+  public static MotoriZenResponseCodeEnum getByName(String name) {
+    for (MotoriZenResponseCodeEnum code : MotoriZenResponseCodeEnum.values()) {
+      if (code.name().equals(name)) {
+        return code;
+      }
+    }
+    return UNKNOWN_ERROR;
+  }
+
 }

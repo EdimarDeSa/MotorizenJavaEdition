@@ -18,7 +18,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -27,7 +26,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class VehicleEntity {
   @Id
   private UUID id;
@@ -48,8 +46,7 @@ public class VehicleEntity {
   private String model;
 
   @Column(nullable = true, length = 11, unique = true)
-  @Builder.Default
-  private String renavam = null;
+  private String renavam;
 
   @Column(nullable = false)
   private Integer year;
@@ -67,8 +64,7 @@ public class VehicleEntity {
   private BigDecimal odometer;
 
   @Column
-  @Builder.Default
-  private Boolean isActive = true;
+  private Boolean isActive;
 
   @CreationTimestamp
   @Column(updatable = false)

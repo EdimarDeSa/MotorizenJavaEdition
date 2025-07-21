@@ -1,11 +1,9 @@
 package com.efscode.motorizen_backend.models.vehicle;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
-public record VehicleDTO(
+public record VehicleFilter(
     UUID id,
-    UUID userId,
     Integer brandId,
     Integer fuelTypeId,
     String model,
@@ -13,10 +11,7 @@ public record VehicleDTO(
     Integer year,
     String color,
     String licensePlate,
-    BigDecimal fuelCapacity,
-    BigDecimal odometer,
     Boolean isActive,
-    String createdAt,
-    String updatedAt,
-    String deletedAt) {
+    Boolean isDeleted) {
+
 }

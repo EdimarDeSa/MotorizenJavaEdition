@@ -20,12 +20,14 @@ import com.efscode.motorizen_backend.models.user.UserUpdatePasswordDTO;
 import com.efscode.motorizen_backend.models.user.UserUpdatesDTO;
 import com.efscode.motorizen_backend.services.UserService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
+@Tag(name = "Users", description = "Users API")
 @Slf4j
 public class UserController {
   private final UserService userService;
@@ -55,7 +57,6 @@ public class UserController {
   @PatchMapping("update-data")
   public ResponseEntity<ApiResponseBody<UserDTO>> updateUser(@AuthenticationPrincipal UserDTO logedUser,
       @RequestBody UserUpdatesDTO userUpdates) {
-    // TODO: process PUT request
     // TODO: atualizar cache dos dados do user
     log.debug("Iniciando updateUser para o usuário`{}`", logedUser.id());
 
@@ -68,7 +69,6 @@ public class UserController {
   @PatchMapping("update-email")
   public ResponseEntity<ApiResponseBody<UserDTO>> updateUserEmail(@AuthenticationPrincipal UserDTO logedUser,
       @RequestBody UserUpdateEmailDTO emailUpdate) {
-    // TODO: process PUT request
     // TODO: atualizar cache dos dados do user
     log.debug("Iniciando updateUserEmail para o usuário`{}`", logedUser.id());
 
@@ -81,7 +81,6 @@ public class UserController {
   @PatchMapping("update-password")
   public ResponseEntity<ApiResponseBody<Void>> updateUserPassword(@AuthenticationPrincipal UserDTO logedUser,
       @RequestBody UserUpdatePasswordDTO passwordUpdate) {
-    // TODO: process PUT request
     // TODO: atualizar cache dos dados do user
     log.debug("Iniciando updateUserPassword para o usuário`{}`");
 
@@ -93,7 +92,6 @@ public class UserController {
 
   @DeleteMapping("/delete")
   public ResponseEntity<ApiResponseBody<Void>> deleteUser(@AuthenticationPrincipal UserDTO logedUser) {
-    // TODO: process DELETE request
     // TODO: atualizar cache de login
     log.debug("Iniciando deleteUser para o usuário`{}`", logedUser.id());
 
