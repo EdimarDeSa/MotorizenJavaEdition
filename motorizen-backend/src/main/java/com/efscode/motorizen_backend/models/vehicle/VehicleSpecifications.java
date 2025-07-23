@@ -60,7 +60,7 @@ public class VehicleSpecifications {
     };
   }
 
-  public static Specification<VehicleEntity> mountFilterSpecification(VehicleFilter filter, UUID userId) {
+  public static Specification<VehicleEntity> mountFilterSpecification(VehicleFilterDTO filter, UUID userId) {
     Specification<VehicleEntity> spec = hasUserId(userId);
 
     if (filter.id() != null)

@@ -2,7 +2,7 @@ package com.efscode.motorizen_backend.models.vehicle;
 
 import java.util.UUID;
 
-public record VehicleFilter(
+public record VehicleFilterDTO(
     UUID id,
     Integer brandId,
     Integer fuelTypeId,

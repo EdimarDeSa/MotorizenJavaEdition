@@ -20,7 +20,7 @@ import com.efscode.motorizen_backend.models.ApiResponseBody;
 import com.efscode.motorizen_backend.models.user.UserDTO;
 import com.efscode.motorizen_backend.models.vehicle.NewVehicleDTO;
 import com.efscode.motorizen_backend.models.vehicle.VehicleDTO;
-import com.efscode.motorizen_backend.models.vehicle.VehicleFilter;
+import com.efscode.motorizen_backend.models.vehicle.VehicleFilterDTO;
 import com.efscode.motorizen_backend.models.vehicle.VehicleUpdatesDTO;
 import com.efscode.motorizen_backend.services.VehicleService;
 
@@ -60,7 +60,7 @@ public class VehicleController {
 
   @GetMapping("/filter")
   public ResponseEntity<ApiResponseBody<List<VehicleDTO>>> filterVehicles(
-      @RequestBody VehicleFilter filter,
+      @RequestBody VehicleFilterDTO filter,
       @AuthenticationPrincipal UserDTO user) {
     log.debug("Iniciando filterVehicles para o filtro`{}` do usuário`{}`", filter, user.id());
     List<VehicleDTO> vehicles = vehicleService.filterVehicles(filter, user.id());

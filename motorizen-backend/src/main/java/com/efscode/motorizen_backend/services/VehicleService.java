@@ -14,7 +14,7 @@ import com.efscode.motorizen_backend.models.user.UserEntity;
 import com.efscode.motorizen_backend.models.vehicle.NewVehicleDTO;
 import com.efscode.motorizen_backend.models.vehicle.VehicleDTO;
 import com.efscode.motorizen_backend.models.vehicle.VehicleEntity;
-import com.efscode.motorizen_backend.models.vehicle.VehicleFilter;
+import com.efscode.motorizen_backend.models.vehicle.VehicleFilterDTO;
 import com.efscode.motorizen_backend.models.vehicle.VehicleMapper;
 import com.efscode.motorizen_backend.models.vehicle.VehicleSpecifications;
 import com.efscode.motorizen_backend.models.vehicle.VehicleUpdatesDTO;
@@ -54,7 +54,7 @@ public class VehicleService {
     return vehicleMapper.entityToDto(vehicle);
   }
 
-  public List<VehicleDTO> filterVehicles(VehicleFilter filter, UUID userId) {
+  public List<VehicleDTO> filterVehicles(VehicleFilterDTO filter, UUID userId) {
     Specification<VehicleEntity> spec = VehicleSpecifications.mountFilterSpecification(filter, userId);
 
     List<VehicleEntity> vehicles = vehicleRepo.findAll(spec);

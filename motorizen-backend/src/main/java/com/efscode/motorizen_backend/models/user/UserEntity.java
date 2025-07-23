@@ -10,6 +10,7 @@ import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.efscode.motorizen_backend.enums.UserRoles;
@@ -82,10 +83,11 @@ public class UserEntity implements UserDetails {
   public Collection<? extends GrantedAuthority> getAuthorities() {
     Set<GrantedAuthority> authorities = new HashSet<>();
 
-    authorities.add(() -> UserRoles.ROLE_USER.name());
+    authorities.add(new SimpleGrantedAuthority(UserRoles.ROLE_USER.name()));
 
+    System.out.println("<isAdministrator: {}>".formatted(isAdministrator));
     if (isAdministrator) {
-      authorities.add(() -> UserRoles.ROLE_ADMIN.name());
+      authorities.add(new SimpleGrantedAuthority(UserRoles.ROLE_ADMIN.name()));
     }
 
     return authorities;

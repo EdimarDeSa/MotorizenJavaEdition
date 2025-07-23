@@ -123,7 +123,7 @@ public class DataLoader implements CommandLineRunner {
     users.forEach(user -> {
       log.info("Adicionando usuário {}", user.firstName());
       userService.createNewUser(user);
-      if ("admin".equals(user.firstName())) {
+      if ("admin".equals(user.firstName().toLowerCase())) {
         UserEntity u = userRepo.findByEmail(user.email());
         u.setIsAdministrator(true);
         userRepo.save(u);
