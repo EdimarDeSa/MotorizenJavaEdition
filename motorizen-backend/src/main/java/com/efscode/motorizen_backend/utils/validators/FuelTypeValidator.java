@@ -23,11 +23,14 @@ public class FuelTypeValidator extends BaseValidators {
     }
   }
 
-  public void validateFuelTypeUpdates(FuelTypeUpdatesDTO dto, Integer id) {
+  public void validateFuelTypeUpdates(FuelTypeUpdatesDTO dto, Integer FuelTypeId) {
     if (!isValidLength(dto.name(), 2, 20))
       throwException(MotoriZenResponseCodeEnum.INVALID_FUEL_TYPE_NAME);
 
-    if (fuelTypeRepo.existsByNameAndIdNot(dto.name(), id))
+    if (fuelTypeRepo.existsByNameAndIdNot(dto.name(), FuelTypeId))
       throwException(MotoriZenResponseCodeEnum.FUEL_TYPE_ALREADY_EXISTS);
+
+    if (!fuelTypeRepo.existsById(FuelTypeId))
+      throwException(MotoriZenResponseCodeEnum.FUEL_TYPE_NOT_FOUND);
   }
 }

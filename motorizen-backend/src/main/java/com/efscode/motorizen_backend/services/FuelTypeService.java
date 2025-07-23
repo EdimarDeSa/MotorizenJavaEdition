@@ -14,6 +14,7 @@ import com.efscode.motorizen_backend.models.fuel_type.NewFuelTypeDTO;
 import com.efscode.motorizen_backend.repositories.FuelTypeRepository;
 import com.efscode.motorizen_backend.utils.validators.FuelTypeValidator;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -24,7 +25,7 @@ public class FuelTypeService {
   private final FuelTypeMapper fuelTypeMapper;
 
   public List<FuelTypeDTO> findAllFuelTypes() {
-    List<FuelTypeEntity> fuelTypes = fuelTypeRepo.findAll();
+    List<FuelTypeEntity> fuelTypes = fuelTypeRepo.findByDeletedAtIsNull();
 
     if (fuelTypes.isEmpty())
       throw new MotorizenException(MotoriZenResponseCodeEnum.FUEL_TYPE_NOT_FOUND);
@@ -61,6 +62,7 @@ public class FuelTypeService {
 
   }
 
+  @Transactional
   public void createFuelType(NewFuelTypeDTO newFuelType) {
     try {
       validator.validateNewFuelType(newFuelType);
@@ -74,13 +76,11 @@ public class FuelTypeService {
     }
   }
 
-  public FuelTypeDTO updateFuelType(Integer id, FuelTypeUpdatesDTO fuelTypeUpdates) {
-    validator.validateFuelTypeUpdates(fuelTypeUpdates, id);
+  @Transactional
+  public FuelTypeDTO updateFuelType(Integer FuelTypeId, FuelTypeUpdatesDTO fuelTypeUpdates) {
+    validator.validateFuelTypeUpdates(fuelTypeUpdates, FuelTypeId);
 
-    FuelTypeEntity fuelType = fuelTypeRepo.findByIdAndDeletedAtIsNull(id);
-
-    if (fuelType == null)
-      throw new MotorizenException(MotoriZenResponseCodeEnum.FUEL_TYPE_ALREADY_EXISTS);
+    FuelTypeEntity fuelType = fuelTypeRepo.findByIdAndDeletedAtIsNull(FuelTypeId);
 
     fuelTypeMapper.updateEntityFromDto(fuelTypeUpdates, fuelType);
 
@@ -89,6 +89,7 @@ public class FuelTypeService {
     return fuelTypeMapper.entityToDto(fuelType);
   }
 
+  @Transactional
   public void deleteFuelType(Integer id) {
     FuelTypeEntity fuelType = fuelTypeRepo.findByIdAndDeletedAtIsNull(id);
 

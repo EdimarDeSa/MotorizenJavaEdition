@@ -42,11 +42,11 @@ public class FuelTypeController {
     return ResponseEntity.ok(content);
   }
 
-  @GetMapping("/details/{id}")
-  public ResponseEntity<ApiResponseBody<FuelTypeDTO>> findFuelTypeById(@PathVariable Integer id) {
-    log.debug("Iniciando findFuelTypeById para o id`{}`", id);
+  @GetMapping("/details/{FuelTypeId}")
+  public ResponseEntity<ApiResponseBody<FuelTypeDTO>> findFuelTypeById(@PathVariable Integer FuelTypeId) {
+    log.debug("Iniciando findFuelTypeById para o id`{}`", FuelTypeId);
 
-    FuelTypeDTO fuelType = fuelTypeService.findFuelTypeById(id);
+    FuelTypeDTO fuelType = fuelTypeService.findFuelTypeById(FuelTypeId);
 
     ApiResponseBody<FuelTypeDTO> content = ApiResponseBody.ok(fuelType);
 
@@ -76,24 +76,24 @@ public class FuelTypeController {
     return ResponseEntity.status(HttpStatus.CREATED).body(content);
   }
 
-  @PutMapping("update/{id}")
+  @PutMapping("update/{FuelTypeId}")
   @PreAuthorize("hasRole('ROLE_ADMIN')")
-  public ResponseEntity<ApiResponseBody<FuelTypeDTO>> updateFuelType(@PathVariable Integer id,
+  public ResponseEntity<ApiResponseBody<FuelTypeDTO>> updateFuelType(@PathVariable Integer FuelTypeId,
       @RequestBody FuelTypeUpdatesDTO fuelTypeUpdates) {
     log.debug("Iniciando updateFuelType para a marca`{}`", fuelTypeUpdates.name());
 
-    FuelTypeDTO fuelType = fuelTypeService.updateFuelType(id, fuelTypeUpdates);
+    FuelTypeDTO fuelType = fuelTypeService.updateFuelType(FuelTypeId, fuelTypeUpdates);
     ApiResponseBody<FuelTypeDTO> content = ApiResponseBody.ok(fuelType);
 
     return ResponseEntity.ok(content);
   }
 
-  @DeleteMapping("/delete/{id}")
+  @DeleteMapping("/delete/{FuelTypeId}")
   @PreAuthorize("hasRole('ROLE_ADMIN')")
-  public ResponseEntity<ApiResponseBody<Void>> deleteFuelType(@PathVariable Integer id) {
-    log.debug("Iniciando deleteFuelType para o id`{}`", id);
+  public ResponseEntity<ApiResponseBody<Void>> deleteFuelType(@PathVariable Integer FuelTypeId) {
+    log.debug("Iniciando deleteFuelType para o id`{}`", FuelTypeId);
 
-    fuelTypeService.deleteFuelType(id);
+    fuelTypeService.deleteFuelType(FuelTypeId);
     ApiResponseBody<Void> content = ApiResponseBody.ok(null);
 
     return ResponseEntity.ok(content);
