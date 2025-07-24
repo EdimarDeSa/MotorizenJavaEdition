@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.efscode.motorizen_backend.enums.MotoriZenResponseCodeEnum;
 import com.efscode.motorizen_backend.models.vehicle.NewVehicleDTO;
+import com.efscode.motorizen_backend.models.vehicle.VehicleFilterDTO;
 import com.efscode.motorizen_backend.models.vehicle.VehicleUpdatesDTO;
 import com.efscode.motorizen_backend.repositories.BrandRepository;
 import com.efscode.motorizen_backend.repositories.FuelTypeRepository;
@@ -36,7 +37,7 @@ public class VehicleValidator extends BaseValidators {
     if (!isValidLength(dto.renavam(), 11, 11))
       throwException(MotoriZenResponseCodeEnum.INVALID_VEHICLE_RENAVAM);
 
-    if (!vehicleRepo.existsByRenavam(dto.renavam()))
+    if (vehicleRepo.existsByRenavam(dto.renavam()))
       throwException(MotoriZenResponseCodeEnum.VEHICLE_RENAVAM_ALREADY_EXISTS);
 
     if (dto.year() < 1900 || dto.year() > LocalDate.now().plusYears(1).getYear())
@@ -48,7 +49,7 @@ public class VehicleValidator extends BaseValidators {
     if (!isValidLength(dto.licensePlate(), 7, 10))
       throwException(MotoriZenResponseCodeEnum.INVALID_VEHICLE_LICENSE_PLATE);
 
-    if (!vehicleRepo.existsByLicensePlate(dto.licensePlate()))
+    if (vehicleRepo.existsByLicensePlate(dto.licensePlate()))
       throwException(MotoriZenResponseCodeEnum.VEHICLE_LICENSE_PLATE_ALREADY_EXISTS);
 
     if (dto.fuelCapacity().compareTo(BigDecimal.ZERO) <= 0)
@@ -103,5 +104,48 @@ public class VehicleValidator extends BaseValidators {
     if (dto.odometer() != null)
       if (dto.odometer().compareTo(BigDecimal.ZERO) <= 0)
         throwException(MotoriZenResponseCodeEnum.INVALID_VEHICLE_ODOMETER);
+  }
+
+  public void validateFilter(VehicleFilterDTO filter) {
+    if (filter.brandId() == null &&
+        filter.fuelTypeId() == null &&
+        filter.model() == null &&
+        filter.renavam() == null &&
+        filter.year() == null &&
+        filter.color() == null &&
+        filter.licensePlate() == null &&
+        filter.isActive() == null &&
+        filter.isDeleted() == null &&
+        filter.id() == null) {
+      throwException(MotoriZenResponseCodeEnum.NO_FILTER_PROVIDED);
+    }
+
+    if (filter.brandId() != null && !brandRepo.existsById(filter.brandId())) {
+      throwException(MotoriZenResponseCodeEnum.BRAND_NOT_FOUND);
+    }
+
+    if (filter.fuelTypeId() != null && !fuelTypeRepo.existsById(filter.fuelTypeId())) {
+      throwException(MotoriZenResponseCodeEnum.FUEL_TYPE_NOT_FOUND);
+    }
+
+    if (filter.model() != null && !isValidLength(filter.model(), 2, 100)) {
+      throwException(MotoriZenResponseCodeEnum.INVALID_VEHICLE_MODEL);
+    }
+
+    if (filter.renavam() != null && !isValidLength(filter.renavam(), 11, 11)) {
+      throwException(MotoriZenResponseCodeEnum.INVALID_VEHICLE_RENAVAM);
+    }
+
+    if (filter.year() != null && (filter.year() < 1900 || filter.year() > LocalDate.now().plusYears(1).getYear())) {
+      throwException(MotoriZenResponseCodeEnum.INVALID_VEHICLE_YEAR);
+    }
+
+    if (filter.color() != null && !isValidLength(filter.color(), 3, 25)) {
+      throwException(MotoriZenResponseCodeEnum.INVALID_VEHICLE_COLOR);
+    }
+
+    if (filter.licensePlate() != null && !isValidLength(filter.licensePlate(), 7, 10)) {
+      throwException(MotoriZenResponseCodeEnum.INVALID_VEHICLE_LICENSE_PLATE);
+    }
   }
 }

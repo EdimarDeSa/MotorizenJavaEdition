@@ -61,6 +61,7 @@ public enum MotoriZenResponseCodeEnum {
 
   // Erros 'globais' -5xx
   INVALID_REQUEST_BODY(-500, HttpStatus.BAD_REQUEST, "Invalid request body."),
+  NO_FILTER_PROVIDED(-501, HttpStatus.BAD_REQUEST, "No filter provided."),
 
   // Erros internos -9xx
   CONFIG_FILE_NOT_FOUND(-900, HttpStatus.INTERNAL_SERVER_ERROR, "Config file not found."),

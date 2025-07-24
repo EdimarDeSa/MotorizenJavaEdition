@@ -11,6 +11,7 @@ public record VehicleUpdatesDTO(
     String color,
     String licensePlate,
     BigDecimal fuelCapacity,
-    BigDecimal odometer) {
+    BigDecimal odometer,
+    Boolean isActive) {
 
 }

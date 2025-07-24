@@ -1,5 +1,6 @@
 package com.efscode.motorizen_backend.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,6 +22,7 @@ import com.efscode.motorizen_backend.models.vehicle.VehicleUpdatesDTO;
 import com.efscode.motorizen_backend.repositories.VehicleRepository;
 import com.efscode.motorizen_backend.utils.validators.VehicleValidator;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -55,8 +57,9 @@ public class VehicleService {
   }
 
   public List<VehicleDTO> filterVehicles(VehicleFilterDTO filter, UUID userId) {
+    validator.validateFilter(filter);
+    
     Specification<VehicleEntity> spec = VehicleSpecifications.mountFilterSpecification(filter, userId);
-
     List<VehicleEntity> vehicles = vehicleRepo.findAll(spec);
 
     if (vehicles.isEmpty())
@@ -65,8 +68,11 @@ public class VehicleService {
     return vehicleMapper.entitiesToDtos(vehicles);
   }
 
+  @Transactional
   public VehicleDTO createVehicle(NewVehicleDTO newVehicle, UUID userId) {
     log.debug("Iniciando createVehicle para o veículo`{}` do usuário`{}`", newVehicle.model(), userId);
+    validator.validateNewVehicle(newVehicle);
+
     UserEntity user = userService.selectUserById(userId);
     BrandEntity brand = brandService.selectBrandById(newVehicle.brandId());
     FuelTypeEntity fuelType = fuelTypeService.selectFuelTypeById(newVehicle.fuelTypeId());
@@ -78,35 +84,37 @@ public class VehicleService {
     return vehicleMapper.entityToDto(vehicle);
   }
 
+  @Transactional
   public VehicleDTO updateVehicle(UUID vehicleId, VehicleUpdatesDTO vehicleUpdates, UUID userId) {
     log.debug("Iniciando updateVehicle para o id`{}` do usuário`{}`", vehicleId, userId);
-
-    validator.validateVehicleUpdates(vehicleUpdates, vehicleId);
 
     VehicleEntity vehicle = vehicleRepo.findByIdAndUserId(vehicleId, userId);
 
     if (vehicle == null)
       throw new MotorizenException(MotoriZenResponseCodeEnum.VEHICLE_NOT_FOUND);
 
+    validator.validateVehicleUpdates(vehicleUpdates, vehicleId);
+
     if (vehicleUpdates.brandId() != null &&
-        vehicleUpdates.brandId() != vehicle.getBrand().getId()) {
+        !vehicle.getBrand().getId().equals(vehicleUpdates.brandId())) {
       BrandEntity brand = brandService.selectBrandById(vehicleUpdates.brandId());
       vehicle.setBrand(brand);
     }
 
     if (vehicleUpdates.fuelTypeId() != null &&
-        vehicleUpdates.fuelTypeId() != vehicle.getFuelType().getId()) {
+        !vehicle.getFuelType().getId().equals(vehicleUpdates.fuelTypeId())) {
       FuelTypeEntity fuelType = fuelTypeService.selectFuelTypeById(vehicleUpdates.fuelTypeId());
       vehicle.setFuelType(fuelType);
     }
 
     vehicleMapper.updateEntityFromDto(vehicleUpdates, vehicle);
-
     vehicleRepo.save(vehicle);
+    VehicleEntity updatedVehicle = vehicleRepo.findByIdAndUserId(vehicleId, userId);
 
-    return vehicleMapper.entityToDto(vehicle);
+    return vehicleMapper.entityToDto(updatedVehicle);
   }
 
+  @Transactional
   public void deleteVehicle(UUID vehicleId, UUID userId) {
     log.debug("Iniciando deleteVehicle para o id`{}` do usuário`{}`", vehicleId, userId);
 
@@ -115,7 +123,7 @@ public class VehicleService {
     if (vehicle == null)
       throw new MotorizenException(MotoriZenResponseCodeEnum.VEHICLE_NOT_FOUND);
 
-    vehicle.setDeletedAt(java.time.LocalDateTime.now());
+    vehicle.setDeletedAt(LocalDateTime.now());
 
     vehicleRepo.save(vehicle);
   }

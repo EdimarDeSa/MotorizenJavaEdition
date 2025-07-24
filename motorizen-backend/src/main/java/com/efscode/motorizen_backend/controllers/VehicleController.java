@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.efscode.motorizen_backend.models.ApiResponseBody;
@@ -47,8 +46,8 @@ public class VehicleController {
     return ResponseEntity.ok(content);
   }
 
-  @GetMapping("/details/{id}")
-  public ResponseEntity<ApiResponseBody<VehicleDTO>> findVehicleById(@RequestParam UUID vehicleId,
+  @GetMapping("/details/{vehicleId}")
+  public ResponseEntity<ApiResponseBody<VehicleDTO>> findVehicleById(@PathVariable UUID vehicleId,
       @AuthenticationPrincipal UserDTO user) {
     log.debug("Iniciando findVehicleById para o id`{}` do usuário`{}`", vehicleId, user.id());
     VehicleDTO vehicle = vehicleService.findVehicleById(vehicleId, user.id());
@@ -58,7 +57,7 @@ public class VehicleController {
     return ResponseEntity.ok(content);
   }
 
-  @GetMapping("/filter")
+  @PostMapping("/filter")
   public ResponseEntity<ApiResponseBody<List<VehicleDTO>>> filterVehicles(
       @RequestBody VehicleFilterDTO filter,
       @AuthenticationPrincipal UserDTO user) {
@@ -82,7 +81,7 @@ public class VehicleController {
     return ResponseEntity.status(HttpStatus.CREATED).body(content);
   }
 
-  @PutMapping("/update/{id}")
+  @PutMapping("/update/{vehicleId}")
   public ResponseEntity<ApiResponseBody<VehicleDTO>> updateVehicle(@PathVariable UUID vehicleId,
       @RequestBody VehicleUpdatesDTO vehicleUpdates, @AuthenticationPrincipal UserDTO user) {
     log.debug("Iniciando updateVehicle para o id`{}` do usuário`{}`", vehicleId, user.id());
@@ -94,7 +93,7 @@ public class VehicleController {
 
   }
 
-  @DeleteMapping("/delete/{id}")
+  @DeleteMapping("/delete/{vehicleId}")
   public ResponseEntity<ApiResponseBody<Void>> deleteVehicle(@PathVariable UUID vehicleId,
       @AuthenticationPrincipal UserDTO user) {
     log.debug("Iniciando deleteVehicle para o id`{}` do usuário`{}`", vehicleId, user.id());

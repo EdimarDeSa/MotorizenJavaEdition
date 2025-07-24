@@ -63,35 +63,45 @@ public class VehicleSpecifications {
   public static Specification<VehicleEntity> mountFilterSpecification(VehicleFilterDTO filter, UUID userId) {
     Specification<VehicleEntity> spec = hasUserId(userId);
 
-    if (filter.id() != null)
+    if (filter.id() != null) {
       spec = spec.and(hasId(filter.id()));
+    }
 
-    if (filter.brandId() != null)
+    if (filter.brandId() != null) {
       spec = spec.and(hasBrandId(filter.brandId()));
+    }
 
-    if (filter.fuelTypeId() != null)
+    if (filter.fuelTypeId() != null) {
       spec = spec.and(hasFuelTypeId(filter.fuelTypeId()));
+    }
 
-    if (filter.model() != null)
+    if (filter.model() != null) {
       spec = spec.and(hasModel(filter.model()));
+    }
 
-    if (filter.renavam() != null)
+    if (filter.renavam() != null) {
       spec = spec.and(hasRenavam(filter.renavam()));
+    }
 
-    if (filter.year() != null)
+    if (filter.year() != null) {
       spec = spec.and(hasYear(filter.year()));
+    }
 
-    if (filter.color() != null)
+    if (filter.color() != null) {
       spec = spec.and(hasColor(filter.color()));
+    }
 
-    if (filter.licensePlate() != null)
+    if (filter.licensePlate() != null) {
       spec = spec.and(hasLicensePlate(filter.licensePlate()));
+    }
 
-    if (filter.isActive() != null)
+    if (filter.isActive() != null) {
       spec = spec.and(isActive(filter.isActive()));
+    }
 
-    if (filter.isDeleted() != null)
+    if (filter.isDeleted() != null) {
       spec = spec.and(isDeleted(filter.isDeleted()));
+    }
 
     return spec;
   }

@@ -85,7 +85,6 @@ public class UserEntity implements UserDetails {
 
     authorities.add(new SimpleGrantedAuthority(UserRoles.ROLE_USER.name()));
 
-    System.out.println("<isAdministrator: {}>".formatted(isAdministrator));
     if (isAdministrator) {
       authorities.add(new SimpleGrantedAuthority(UserRoles.ROLE_ADMIN.name()));
     }
