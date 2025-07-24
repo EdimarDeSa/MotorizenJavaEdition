@@ -6,7 +6,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: none
   h2:
     console:
       enabled: false
@@ -32,8 +32,8 @@ spring:
 
 logging:
   level:
-    root: INFO
-    "[com.efscode.motorizen_backend]": INFO
+    root: ERROR
+    "[com.efscode.motorizen_backend]": DEBUG
 
 app:
   info:

@@ -51,8 +51,8 @@ springdoc:
 
 logging:
   level:
-    root: ERROR
-    '[com.efscode.motorizen_backend]': ERROR
+    root: ${LOG_LEVEL:ERROR}
+    '[com.efscode.motorizen_backend]': ${LOG_LEVEL:ERROR}
 
 app:
   security:
