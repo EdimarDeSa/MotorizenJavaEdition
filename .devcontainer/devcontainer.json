@@ -8,7 +8,7 @@
 			"installGradle": "false"
 		},
 		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
-		"ghcr.io/devcontainers/features/node:1": {},
+		"ghcr.io/devcontainers/features/node:2": {},
 		"ghcr.io/nikiforovall/devcontainer-features/dotnet-csharpier:1": {},
 		"ghcr.io/devcontainers-extra/features/angular-cli:2": {},
 		"ghcr.io/devcontainer-community/devcontainer-features/chezmoi.io:1": {}
